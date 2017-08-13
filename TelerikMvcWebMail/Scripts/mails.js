@@ -23,6 +23,7 @@ $(document).ready(function () {
         $(".main-section").load(baseUrl + "/Home/NewMail");
         $(".main-section").removeClass("horizontal").removeClass("vertical");
     });
+
     $('#MenuNewMail').on('click', function (e) {
         $("#PartalViewContet").load(baseUrl + "/Home/GetNewEmail");
         $("#PartalViewContet").css("display", "");
@@ -31,6 +32,16 @@ $(document).ready(function () {
         $(".main-section").removeClass("horizontal").removeClass("vertical");
     });
     
+
+    $('#NewFolder').on('click', function (e) {
+        $("#PartalViewContet").load(baseUrl + "/Home/MailBoxFolders");
+        $("#PartalViewContet").css("display", "");
+        $("#mainViewContent").css("display", "none");
+        $("#IsParialViewLoaded").val("1");
+        $(".main-section").removeClass("horizontal").removeClass("vertical");
+    });
+
+
     // Attach new mails handler
     $("#mainWidget").on("mousedown", "tr[role='row']", function (e) {
         if (e.which === 3) {
@@ -106,10 +117,10 @@ function mailMenuSelect(e) {
         case "unread":
             mailMarkAsReadUnread("unread");
             break;
-        case "NewFolder":
+        //case "NewFolder":
            
-            window.location.href = "../Home/MailBoxFolders";
-            break;
+        //    window.location.href = "../Home/MailBoxFolders";
+        //    break;
         case "print":
             mailPrint();
             break;

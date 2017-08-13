@@ -169,11 +169,7 @@ namespace TelerikMvcWebMail.Controllers
             return Json(Result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult MailBoxFolders()
-        {
-            
-            return View();
-        }
+   
         public ActionResult ReadFolderList([DataSourceRequest] DataSourceRequest request)
         {
             TelerikMvcWebMail.DataLayer.CommonFunctions Obj = new DataLayer.CommonFunctions();
@@ -225,10 +221,6 @@ namespace TelerikMvcWebMail.Controllers
             List<MailBoxFolderModel> Model = Obj.MailBoxFolderList(Convert.ToInt32(MailBoxId), Session["UserId"].ToString());
             return Json(Model,JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetNewEmail()
-        {
-            return PartialView();
-        }
 
         public ActionResult SaveNewEmail(MailViewModel _MailViewModel)
         {            
@@ -259,6 +251,15 @@ namespace TelerikMvcWebMail.Controllers
             return Json(Result,JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetNewEmail()
+        {
+            return PartialView();
+        }
+
+        public ActionResult MailBoxFolders()
+        {
+            return PartialView();
+        }
         public ActionResult UpdateMailActiveDisable(string MessageId, string Flag)
         {
             TelerikMvcWebMail.DataLayer.CommonFunctions Obj = new DataLayer.CommonFunctions();
