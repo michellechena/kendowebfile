@@ -69,16 +69,7 @@
       <End Role="User" EntitySet="Users" />
       <End Role="MailBox" EntitySet="MailBoxes" />
     </AssociationSet>
-    <EntitySet Name="MailBoxFolders" EntityType="WebMail.MailBoxFolder" />
-    <AssociationSet Name="FK__MailBoxFo__MailB__6FE99F9F" Association="WebMail.FK__MailBoxFo__MailB__6FE99F9F">
-      <End Role="MailBox" EntitySet="MailBoxes" />
-      <End Role="MailBoxFolder" EntitySet="MailBoxFolders" />
-    </AssociationSet>
     <EntitySet Name="Mails" EntityType="WebMail.Mail" />
-    <AssociationSet Name="FK__Mails__Category__14270015" Association="WebMail.FK__Mails__Category__14270015">
-      <End Role="MailBoxFolder" EntitySet="MailBoxFolders" />
-      <End Role="Mail" EntitySet="Mails" />
-    </AssociationSet>
     <EntitySet Name="MailBoxAccesses" EntityType="WebMail.MailBoxAccess" />
     <AssociationSet Name="FK__MailBoxAc__MailB__29221CFB" Association="WebMail.FK__MailBoxAc__MailB__29221CFB">
       <End Role="MailBox" EntitySet="MailBoxes" />
@@ -87,6 +78,15 @@
     <AssociationSet Name="FK__MailBoxAc__UserI__2A164134" Association="WebMail.FK__MailBoxAc__UserI__2A164134">
       <End Role="User" EntitySet="Users" />
       <End Role="MailBoxAccess" EntitySet="MailBoxAccesses" />
+    </AssociationSet>
+    <EntitySet Name="MailBoxFolders" EntityType="WebMail.MailBoxFolder" />
+    <AssociationSet Name="FK__MailBoxFo__MailB__02FC7413" Association="WebMail.FK__MailBoxFo__MailB__02FC7413">
+      <End Role="MailBox" EntitySet="MailBoxes" />
+      <End Role="MailBoxFolder" EntitySet="MailBoxFolders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Mails__Category__14270015" Association="WebMail.FK__Mails__Category__14270015">
+      <End Role="MailBoxFolder" EntitySet="MailBoxFolders" />
+      <End Role="Mail" EntitySet="Mails" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="User">
@@ -109,8 +109,8 @@
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="MailBoxSequence" Type="Int64" Nullable="false" />
     <NavigationProperty Name="User" Relationship="WebMail.FK__MailBox__UserId__5CD6CB2B" FromRole="MailBox" ToRole="User" />
-    <NavigationProperty Name="MailBoxFolders" Relationship="WebMail.FK__MailBoxFo__MailB__6FE99F9F" FromRole="MailBox" ToRole="MailBoxFolder" />
     <NavigationProperty Name="MailBoxAccesses" Relationship="WebMail.FK__MailBoxAc__MailB__29221CFB" FromRole="MailBox" ToRole="MailBoxAccess" />
+    <NavigationProperty Name="MailBoxFolders" Relationship="WebMail.FK__MailBoxFo__MailB__02FC7413" FromRole="MailBox" ToRole="MailBoxFolder" />
   </EntityType>
   <Association Name="FK__MailBox__UserId__5CD6CB2B">
     <End Type="WebMail.User" Role="User" Multiplicity="1" />
@@ -121,29 +121,6 @@
       </Principal>
       <Dependent Role="MailBox">
         <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="MailBoxFolder">
-    <Key>
-      <PropertyRef Name="MailBoxFolderId" />
-    </Key>
-    <Property Name="MailBoxFolderId" Type="Int32" Nullable="false" />
-    <Property Name="MailBoxFolderName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="MailBoxId" Type="Int32" Nullable="false" />
-    <Property Name="Sequence" Type="Int64" Nullable="false" />
-    <NavigationProperty Name="MailBox" Relationship="WebMail.FK__MailBoxFo__MailB__6FE99F9F" FromRole="MailBoxFolder" ToRole="MailBox" />
-    <NavigationProperty Name="Mails" Relationship="WebMail.FK__Mails__Category__14270015" FromRole="MailBoxFolder" ToRole="Mail" />
-  </EntityType>
-  <Association Name="FK__MailBoxFo__MailB__6FE99F9F">
-    <End Type="WebMail.MailBox" Role="MailBox" Multiplicity="1" />
-    <End Type="WebMail.MailBoxFolder" Role="MailBoxFolder" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MailBox">
-        <PropertyRef Name="MailBoxId" />
-      </Principal>
-      <Dependent Role="MailBoxFolder">
-        <PropertyRef Name="MailBoxId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -163,18 +140,6 @@
     <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="MailBoxFolder" Relationship="WebMail.FK__Mails__Category__14270015" FromRole="Mail" ToRole="MailBoxFolder" />
   </EntityType>
-  <Association Name="FK__Mails__Category__14270015">
-    <End Type="WebMail.MailBoxFolder" Role="MailBoxFolder" Multiplicity="0..1" />
-    <End Type="WebMail.Mail" Role="Mail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MailBoxFolder">
-        <PropertyRef Name="MailBoxFolderId" />
-      </Principal>
-      <Dependent Role="Mail">
-        <PropertyRef Name="Category" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityType Name="MailBoxAccess">
     <Key>
       <PropertyRef Name="MailBoxAccessId" />
@@ -206,6 +171,42 @@
       </Principal>
       <Dependent Role="MailBoxAccess">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="MailBoxFolder">
+    <Key>
+      <PropertyRef Name="MailBoxFolderId" />
+    </Key>
+    <Property Name="MailBoxFolderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MailBoxFolderName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MailBoxId" Type="Int32" Nullable="false" />
+    <Property Name="Sequence" Type="Int64" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="MailBox" Relationship="WebMail.FK__MailBoxFo__MailB__02FC7413" FromRole="MailBoxFolder" ToRole="MailBox" />
+    <NavigationProperty Name="Mails" Relationship="WebMail.FK__Mails__Category__14270015" FromRole="MailBoxFolder" ToRole="Mail" />
+  </EntityType>
+  <Association Name="FK__MailBoxFo__MailB__02FC7413">
+    <End Type="WebMail.MailBox" Role="MailBox" Multiplicity="1" />
+    <End Type="WebMail.MailBoxFolder" Role="MailBoxFolder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MailBox">
+        <PropertyRef Name="MailBoxId" />
+      </Principal>
+      <Dependent Role="MailBoxFolder">
+        <PropertyRef Name="MailBoxId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Mails__Category__14270015">
+    <End Type="WebMail.MailBoxFolder" Role="MailBoxFolder" Multiplicity="0..1" />
+    <End Type="WebMail.Mail" Role="Mail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MailBoxFolder">
+        <PropertyRef Name="MailBoxFolderId" />
+      </Principal>
+      <Dependent Role="Mail">
+        <PropertyRef Name="Category" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

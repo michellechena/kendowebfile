@@ -22,12 +22,34 @@ namespace TelerikMvcWebMail.Controllers
             mailsService = new MailsService(new WebMailEntities());
 
         }
-
+        public ActionResult FromOtherPageRequest(string MailBoxId = null)
+        {
+            TempData["SelectedMailBoxId"] = MailBoxId;
+            return  RedirectToAction("Index");
+        } 
         public ActionResult Index()
         {
-            var FirstFolderId = mailsService.GetFirstFolderId(Session["UserId"].ToString());
-            ViewBag.FirstFolderId = FirstFolderId;
-            return View();
+            int MailBoxid = 0;
+            try
+            {
+                MailBoxid = Convert.ToInt32(TempData["SelectedMailBoxId"]);
+            }
+            catch(Exception ex)
+            {
+
+            }
+            if (MailBoxid!=0)
+            {
+                var FirstFolderId = mailsService.GetFirstFolderId(Session["UserId"].ToString(), MailBoxid);
+                ViewBag.FirstFolderId = FirstFolderId;
+            }
+            else
+            {
+                var FirstFolderId = mailsService.GetFirstFolderId(Session["UserId"].ToString());
+                ViewBag.FirstFolderId = FirstFolderId;
+            }
+             
+              return View();
         }
 
         public ActionResult NewMail(string id, string mailTo, string subject)
@@ -118,12 +140,74 @@ namespace TelerikMvcWebMail.Controllers
             return PartialView("EmailDetailes", Model);
 
         }
-
         [HttpPost]
         public ActionResult UpdateEmailSubject(MailViewModel Model)
         {
             bool Result = mailsService.UpdateEmailSubject(Model);
             return Json(Result, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult MailBoxFolders()
+        {
+            
+            return View();
+        }
+        public ActionResult ReadFolderList([DataSourceRequest] DataSourceRequest request)
+        {
+            TelerikMvcWebMail.DataLayer.CommonFunctions Obj = new DataLayer.CommonFunctions();
+            List<MailBoxFolderModel> Model = Obj.AllUserFolderList( Session["UserId"].ToString());
+            return Json(Model.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+            
+        }
+        public ActionResult returnFolderPartalView(string FolderId)
+        {
+            MailBoxFolderModel Model = new MailBoxFolderModel();
+            TelerikMvcWebMail.DataLayer.CommonFunctions Obj1 = new DataLayer.CommonFunctions();
+            List<SelectListItem> List = new List<SelectListItem>() {
+                new SelectListItem {
+                    Text="Select",
+                    Value=""
+                }
+            };
+            List.AddRange(Obj1.MailBoxList(Convert.ToInt32(Session["UserId"])));
+            ViewBag.FolderList = List;
+           
+            if (!string.IsNullOrEmpty(FolderId))
+            {
+                TelerikMvcWebMail.DataLayer.CommonFunctions Obj = new DataLayer.CommonFunctions();
+                 Model = Obj.GetFolderDeatiles(Convert.ToInt32(FolderId));                
+            }
+            
+            return View("_PartialAddEditFolder", Model);
+
+        }
+        public ActionResult AddEditFolder(MailBoxFolderModel Model)
+        {
+            TelerikMvcWebMail.DataLayer.CommonFunctions Obj = new DataLayer.CommonFunctions();
+            Model.UserId = Session["UserId"].ToString();
+            bool Result=Obj.AddEditFolder(Model);            
+            return Json(Result, JsonRequestBehavior.AllowGet);
+
+        }
+        public ActionResult FunctionDeleteFolder(string id)
+        {
+            TelerikMvcWebMail.DataLayer.CommonFunctions Obj = new DataLayer.CommonFunctions();           
+            bool Result = Obj.FunctionDeleteFolder(id);
+            return Json(Result, JsonRequestBehavior.AllowGet);
+
+        }
+        
+        public ActionResult getFolderlistBySelectedmailBox(long MailBoxId)
+        {
+            TelerikMvcWebMail.DataLayer.CommonFunctions Obj = new DataLayer.CommonFunctions();
+            List<MailBoxFolderModel> Model = Obj.MailBoxFolderList(Convert.ToInt32(MailBoxId), Session["UserId"].ToString());
+            return Json(Model,JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
+
     }
 }

@@ -42,6 +42,7 @@
     <Property Name="MailBoxFolderName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="MailBoxId" Type="int" Nullable="false" />
     <Property Name="Sequence" Type="bigint" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
   </EntityType>
   <EntityType Name="Mails">
     <Key>

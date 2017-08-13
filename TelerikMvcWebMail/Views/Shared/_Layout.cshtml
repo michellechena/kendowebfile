@@ -41,7 +41,7 @@
     <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.timezones.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.3/js.cookie.min.js"></script>
     <script src="http://kendo.cdn.telerik.com/2017.1.118/js/pako_deflate.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/jquery.ajax.unobtrusive/3.2.4/jquery.unobtrusive-ajax.min.js"></script>
 </head>
 <body>
     <div id="BaseUrl" data-baseurl="@Context.Request.Url.GetLeftPart(UriPartial.Authority)@Url.Content("~/")"></div>
@@ -78,6 +78,13 @@
         @{
             TelerikMvcWebMail.DataLayer.CommonFunctions _MailBoxList = new TelerikMvcWebMail.DataLayer.CommonFunctions();
             var MailBox=  _MailBoxList.MailBoxList(Convert.ToInt32(Session["UserId"]), "DRP");
+            var Folerid = TempData["SelectedMailBoxId"];
+            if(Folerid!=null)
+            {
+                MailBox.FindAll(x => x.Value == Folerid.ToString())
+                .ForEach(x => x.Selected = true);
+            }
+            var s = MailBox;
         }
         @(Html.Kendo().DropDownList()
           .Name("ListOfMailBox")
@@ -116,23 +123,29 @@
 <script>
     function DrpMailBoxChnages(e)
     {
-     //   debugger;
-        
-        $("#mainWidget").data("kendoGrid").dataSource.read();
-        $.ajax({
-            url: '/Home/GetSelectedMailBoxData',
-            cache: false,
-            async: false,
-            data: {MailBoxId: $("#ListOfMailBox").val(), Defoult: "YES" },
-            success: function (DefoultFolder) {                
-                Cookies.set('ChangedIdOfFolder', "0");                              
-                filterGrid(DefoultFolder);
-                
-            },
-            error: function (error) {
-                // alert('Error');
-            }
-        })
+        //   debugger;
+        var PathName = window.location.pathname;
+        if (PathName.indexOf("MailBoxFolders") > 0) {         
+            window.location.href = document.location.origin + "/Home/FromOtherPageRequest?MailBoxId=" + $("#ListOfMailBox").val()
+        }
+        else {           
+
+            $("#mainWidget").data("kendoGrid").dataSource.read();
+            $.ajax({
+                url: '/Home/GetSelectedMailBoxData',
+                cache: false,
+                async: false,
+                data: { MailBoxId: $("#ListOfMailBox").val(), Defoult: "YES" },
+                success: function (DefoultFolder) {
+                    Cookies.set('ChangedIdOfFolder', "0");
+                    filterGrid(DefoultFolder);
+
+                },
+                error: function (error) {
+                    // alert('Error');
+                }
+            })
+        }
         
     }
     </script>

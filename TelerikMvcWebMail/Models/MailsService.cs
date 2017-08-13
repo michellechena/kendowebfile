@@ -137,19 +137,22 @@ namespace TelerikMvcWebMail.Models
             entities.Dispose();
         }
 
-       public int GetFirstFolderId(string UserId)
+       public int GetFirstFolderId(string UserId,int MailBoxId=0)
         {
             long Id = Convert.ToInt32(UserId);
-            int MailBoxId = 0;
+            int _MailBoxId = Convert.ToInt32(MailBoxId);
             int FolderId = 0;
-            using (var Entity = new WebMailEntities())
+            if (_MailBoxId==0)
             {
-                MailBoxId = Entity.MailBoxes.Where(s => s.UserId == Id).OrderBy(s => s.MailBoxSequence).Take(1).Select(z => z.MailBoxId).FirstOrDefault();
+                using (var Entity = new WebMailEntities())
+                {
+                    _MailBoxId = Entity.MailBoxes.Where(s => s.UserId == Id).OrderBy(s => s.MailBoxSequence).Take(1).Select(z => z.MailBoxId).FirstOrDefault();
 
+                }
             }
             using (var Entity = new WebMailEntities())
             {
-                FolderId = Entity.MailBoxFolders.Where(s => s.MailBoxId == MailBoxId).OrderBy(s => s.Sequence).Take(1).Select(z => z.MailBoxFolderId).FirstOrDefault();
+                FolderId = Entity.MailBoxFolders.Where(s => s.MailBoxId == _MailBoxId).OrderBy(s => s.Sequence).Take(1).Select(z => z.MailBoxFolderId).FirstOrDefault();
 
             }
             return FolderId;

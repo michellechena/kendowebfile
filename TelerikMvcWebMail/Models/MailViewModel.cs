@@ -62,11 +62,18 @@ namespace TelerikMvcWebMail.Models
 
     public class MailBoxFolderModel
     {
+        public string MailBoxName { get; set; }
         public int MailBoxFolderId { get; set; }
+        [Display(Name = "Folder Name")]
+        [Required(ErrorMessage = "Folder name required")]
         public string MailBoxFolderName { get; set; }
+        [Required(ErrorMessage ="MailBox required")]
+        [Display(Name ="Mail Box")]
         public int MailBoxId { get; set; }
         public long Sequence { get; set; }
         public string Owner { get; set; }
+        public string UserId { get; set; }
+        public string Sequenseids { get; set; }
     }
 
     public class Folders

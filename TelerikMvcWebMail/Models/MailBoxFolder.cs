@@ -24,6 +24,7 @@ namespace TelerikMvcWebMail.Models
         public string MailBoxFolderName { get; set; }
         public int MailBoxId { get; set; }
         public long Sequence { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     
         public virtual MailBox MailBox { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

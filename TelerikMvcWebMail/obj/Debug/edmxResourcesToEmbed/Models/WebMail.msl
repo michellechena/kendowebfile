@@ -65,16 +65,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="MailBoxFolders">
-      <EntityTypeMapping TypeName="WebMail.MailBoxFolder">
-        <MappingFragment StoreEntitySet="MailBoxFolders">
-          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
-          <ScalarProperty Name="MailBoxId" ColumnName="MailBoxId" />
-          <ScalarProperty Name="MailBoxFolderName" ColumnName="MailBoxFolderName" />
-          <ScalarProperty Name="MailBoxFolderId" ColumnName="MailBoxFolderId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Mails">
       <EntityTypeMapping TypeName="WebMail.Mail">
         <MappingFragment StoreEntitySet="Mails">
@@ -97,6 +87,17 @@
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="MailBoxId" ColumnName="MailBoxId" />
           <ScalarProperty Name="MailBoxAccessId" ColumnName="MailBoxAccessId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MailBoxFolders">
+      <EntityTypeMapping TypeName="WebMail.MailBoxFolder">
+        <MappingFragment StoreEntitySet="MailBoxFolders">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="MailBoxId" ColumnName="MailBoxId" />
+          <ScalarProperty Name="MailBoxFolderName" ColumnName="MailBoxFolderName" />
+          <ScalarProperty Name="MailBoxFolderId" ColumnName="MailBoxFolderId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

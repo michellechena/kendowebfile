@@ -17,8 +17,8 @@ namespace TelerikMvcWebMail.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MailBox()
         {
-            this.MailBoxFolders = new HashSet<MailBoxFolder>();
             this.MailBoxAccesses = new HashSet<MailBoxAccess>();
+            this.MailBoxFolders = new HashSet<MailBoxFolder>();
         }
     
         public int MailBoxId { get; set; }
@@ -28,8 +28,8 @@ namespace TelerikMvcWebMail.Models
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MailBoxFolder> MailBoxFolders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MailBoxAccess> MailBoxAccesses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MailBoxFolder> MailBoxFolders { get; set; }
     }
 }
