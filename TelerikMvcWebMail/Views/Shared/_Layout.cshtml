@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - My Kendo UI MVC Application</title>
+    <!--GoogleAnalytics tracking script-->
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-111455-1']);
+        _gaq.push(['_setDomainName', '.telerik.com']);
+        _gaq.push(['_addIgnoredRef', 'telerik.com']);
+        _gaq.push(['_trackPageview']);
+        (function ()
+        {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+        function trackPage(page)
+        {
+            _gaq.push(['_trackPageview', page]);
+        }
+    </script>
+    <link type="image/x-icon" href="~/favicon-progress.ico" rel="shortcut icon">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.dataviz.min.css" rel="stylesheet" />
+    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.metro.min.css" rel="stylesheet" />
+    <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.dataviz.metro.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    @Styles.Render("~/Content/css")
+    @RenderSection("PageStyles", false)
+    @RenderSection("PageStylesPartial", false)
+
+    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/jquery.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.all.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.aspnetmvc.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.timezones.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.3/js.cookie.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2017.1.118/js/pako_deflate.min.js"></script>
+
+</head>
+<body>
+    <div id="BaseUrl" data-baseurl="@Context.Request.Url.GetLeftPart(UriPartial.Authority)@Url.Content("~/")"></div>
+    @Scripts.Render("~/Scripts/layout.js")
+
+    <script id="button-template" type="text/x-kendo-template">
+    </script>
+    <script id="tooltip-template" type="text/x-kendo-template">
+        <div class="image-wrapper">
+            <img src="http://demos.telerik.com/kendo-ui/content/web/Customers/PICCO.jpg" style="border-radius: 100%" />
+        </div>
+        <p class="name">Antonio Morandi</p>
+        <p>antonio.morandi@progress.com</p>
+        @(Html.Kendo().Button()
+        .Name("signInButton")
+        .HtmlAttributes(new { @class = "k-primary" })
+        .Content("Sign Out")
+        .Events(ev => ev.Click("onClick"))
+        .ToClientTemplate()
+    )
+    </script>
+    <script type="text/kendo-ui" id="menu-item-template">
+        <span>
+            <img src='http://demos.telerik.com/kendo-ui/content/web/Customers/PICCO.jpg' />
+        </span>
+    </script>
+    <header class="main-header">
+        @*<a href="@Url.Action("Index", "Home")" title="Go to WebMail">
+            <h1 class="logo">
+                WebMail
+            </h1>
+        </a>*@
+        @{
+            var MainBoxList = TelerikMvcWebMail.Common.Common.MailBoxList();
+        }
+
+        @(Html.Kendo().DropDownList()
+          .Name("ListOfMailBox")
+          .DataTextField("Text")
+          .DataValueField("Value")
+          .Events(e => e.Change("DrpMailBoxChnages"))
+          .BindTo(@MainBoxList)          
+          .HtmlAttributes(new { style = "width: 10%;background-color:white;margin-left:2%;margin-top:1%" })
+        )
+            
+        @(Html.Kendo().Menu()
+                .Name("mainMenu")
+                .Items(items =>
+                {
+                    items.Add().Text("Mail").Action("Index", "Home");
+                    items.Add().Text("Calendar").Action("Index", "Calendar");
+                    items.Add().Text("People").Action("Index", "Contacts");
+                    items.Add().Text("Tasks").Action("Index", "Tasks");
+                    items.Add().Text("<span class='image-wrapper'><img src='http://demos.telerik.com/kendo-ui/content/web/Customers/PICCO.jpg'/><span/>").Encoded(false);
+                })
+        )
+
+        @(Html.Kendo().Tooltip()
+                .For("#mainMenu > li:last")
+                .ShowOn(TooltipShowOnEvent.Click)
+                .AutoHide(false)
+                .ContentTemplateId("tooltip-template")
+        )
+    </header>
+    <content class="main-content">
+        @RenderBody()
+    </content>
+</body>
+</html>
+<script>
+    function DrpMailBoxChnages(e)
+    {        
+        $("#mainWidget").data("kendoGrid").dataSource.read();
+    }
+    </script>

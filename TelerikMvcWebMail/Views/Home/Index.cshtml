@@ -1,0 +1,151 @@
+﻿@{
+    ViewBag.Title = "Mail";
+}
+
+@section PageStyles {
+    <link href="@Url.Content("~/Content/mail.css")" rel="stylesheet" type="text/css" />
+}
+
+@model IEnumerable<TelerikMvcWebMail.Models.MailViewModel>
+
+@Html.Partial("Sidebar")
+
+<section class="main-section horizontal">
+    <div class="toolbar">
+        <div class="left">
+            @(Html.Kendo().Menu()
+                .Name("mailMenu")
+                .OpenOnClick(true)
+                .Items(items =>
+                {
+                    items.Add()
+                        .Text("Reply")
+                        .Items(children =>
+                        {
+                            children.Add().Text("Reply").HtmlAttributes(new { @id = "RE", @operation = "reply" });
+                            children.Add().Text("Reply All").HtmlAttributes(new { @id = "RE_ALL", @operation = "reply" });
+                            children.Add().Text("Forward").HtmlAttributes(new { @id = "FW", @operation = "forward" });
+                        });
+                    items.Add().Text("Delete").HtmlAttributes(new { @id = "Deleted", @operation = "moveDelete" });
+                    items.Add()
+                        .Text("Move").HtmlAttributes(new { @id="MoveMenu"})
+                        .Items(children =>
+                        {
+                            children.Add().Text("Inbox").HtmlAttributes(new { @id = "Inbox", @operation = "moveDelete" });
+                            children.Add().Text("Junk").HtmlAttributes(new { @id = "Junk", @operation = "moveDelete" });
+                            children.Add().Text("Drafts").HtmlAttributes(new { @id = "Drafts", @operation = "moveDelete" });
+                            children.Add().Text("Deleted").HtmlAttributes(new { @id = "Deleted", @operation = "moveDelete" });
+                            children.Add().Text("NativeScript").HtmlAttributes(new { @id = "NativeScript", @operation = "moveDelete" });
+                            children.Add().Text("KendoUI").HtmlAttributes(new { @id = "KendoUI", @operation = "moveDelete" });
+                            //children.Add().Text("MailBox1_Folder1").HtmlAttributes(new { @id = "MailBox1_Folder1", @operation = "moveDelete" });
+                        });
+                    items.Add()
+                        .Text("Junk")
+                        .Items(children =>
+                        {
+                            children.Add().Text("Report Spam").HtmlAttributes(new { @id = "Junk", @operation = "moveDelete" });
+                        });
+                    items.Add()
+                        .Text("More")
+                        .Items(children =>
+                        {
+                            children.Add().Text("Mark as unread").HtmlAttributes(new { @id = "unread", @operation = "unread" });
+                            children.Add().Text("Mark as read").HtmlAttributes(new { @id = "read", @operation = "read" });
+                            children.Add().Text("Print").HtmlAttributes(new { @id = "print", @operation = "print" });
+                        });
+                })
+                .Events(e => e.Select("mailMenuSelect"))
+            )
+        </div>
+        <div class="right">
+            <span class="btn btn-vertical-pane iconOnly" onclick="changeToVerticalPanes(this)" title="Display vertical panes"></span>
+            <span class="btn btn-horizontal-pane selected iconOnly" onclick="changeToHorizontalPanes(this)" title="Display cards"></span>
+        </div>
+    </div>
+    <div class="inner-section">
+        <div class="mail-grid">
+            <span class="searchbox">
+                <input type="text" class="k-input search-textbox" placeholder="Search mail ..." name="to-textbox">
+            </span>
+            @(Html.Kendo().Grid(Model)
+                .Name("mainWidget")
+                .Columns(columns =>
+                {
+                    columns.Bound(p => p.ID)
+                        .Title("")
+                        .Width(60)
+                        .Sortable(false)
+                        .ClientTemplate("<input type='checkbox' class='chkbx' />")
+                        .HeaderTemplate("<input type='checkbox' class='master-checkbox' />");
+                    columns.Bound(p => p.From).Title("From");
+                    columns.Bound(p => p.Subject).Title("Subject");
+                    columns.Bound(p => p.Subject)
+                        .Title("Subject")
+                        .ClientTemplate("<p>#= From #</p><p>#= Subject #</p>")
+                        .Hidden(true);
+                    columns.Bound(p => p.Date).HtmlAttributes(new { @class = "date" }).Title("Date").Format("{0:g}");
+                })
+                .Scrollable()
+                .Sortable()
+                .Groupable()
+                .Pageable(p => p.Enabled(false))
+                .Selectable(s => s.Mode(GridSelectionMode.Multiple))
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .AutoSync(true)
+                    .PageSize(100)
+                    .Model(model => model.Id(p => p.ID))
+                    .Create(create => create.Action("Create", "Home"))
+                    .Read(read => read.Action("Read", "Home").Data("SendSelectdMailBoxId"))
+                    .Update(update => update.Action("Update", "Home"))
+                    .Events(e => e.Change("dataSourceChange").RequestEnd("dataSourceRequestEnd"))
+                )
+                .Events(e => e
+                    .Change("mailSelectionChanged")
+                    .DataBound("mailGridDataBound")
+                )
+            )
+        </div>
+        <div class="mail-details-wrapper empty">
+            <div class="mail-details">
+                <div class="mail-details-header">
+                    <h2 class="mail-subject"></h2>
+                    <p class="mail-date"></p>
+                    <p class="mail-sender-wrapper">
+                        <label>To:</label>
+                        <span class="mail-sender"></span>
+                    </p>
+                </div>
+                <p class="mail-text"></p>
+            </div>
+            <p class="empty-msg">Select one row to display mail details</p>
+        </div>
+        @(Html.Kendo().ContextMenu()
+            .Name("mailContextMenu")
+            .Target("#mainWidget")
+            .Orientation(ContextMenuOrientation.Vertical)
+            .Items(items =>
+            {
+                items.Add().Text("Reply").HtmlAttributes(new { @id = "RE", @operation = "reply" });
+                items.Add().Text("Reply All").HtmlAttributes(new { @id = "RE", @operation = "reply" });
+                items.Add().Text("Forward").HtmlAttributes(new { @id = "FW", @operation = "forward" });
+                items.Add().Text("Mark as unread").HtmlAttributes(new { @id = "unread", @operation = "unread" });
+                items.Add().Text("Mark as read").HtmlAttributes(new { @id = "read", @operation = "read" });
+                items.Add().Text("Delete").HtmlAttributes(new { @id = "Deleted", @operation = "moveDelete" });
+                items.Add().Text("Junk").HtmlAttributes(new { @id = "Junk", @operation = "moveDelete" });
+                items.Add().Text("Print").HtmlAttributes(new { @id = "print", @operation = "print" });
+            })
+            .Events(e => e.Select("mailMenuSelect").Open("mailContextMenuOpen"))
+        )
+    </div>
+</section>
+<script>
+    function SendSelectdMailBoxId()
+    { 
+            return {
+                MailBoxId: $("#ListOfMailBox").val()
+            }        
+    }
+</script>
+
+@Scripts.Render("~/Scripts/mails.js")
