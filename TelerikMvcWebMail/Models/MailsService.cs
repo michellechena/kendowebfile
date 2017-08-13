@@ -43,11 +43,7 @@ namespace TelerikMvcWebMail.Models
                     Url=message.Url
                 }).ToList();
 
-                if (!UpdateDatabase)
-                {
-                    HttpContext.Current.Session["Mails"] = result;
-                }
-                
+               
             
 
             return result;
@@ -163,6 +159,16 @@ namespace TelerikMvcWebMail.Models
                         {                            
                             Mail.Status ="D";
                             Entity.SaveChanges();
+                        }
+                    }
+                   else if (UpdateOnlyDisable == "Deleted")
+                    {
+                        if (Mail != null)
+                        {
+
+                            Entity.Mails.Remove(Mail);
+                            Entity.SaveChanges();
+                            
                         }
                     }
                     else

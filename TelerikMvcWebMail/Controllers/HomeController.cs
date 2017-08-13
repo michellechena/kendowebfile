@@ -75,8 +75,10 @@ namespace TelerikMvcWebMail.Controllers
 
         public ActionResult Read([DataSourceRequest]DataSourceRequest request, string AjaxRequest,string MailBoxId)
         {
-            var data = mailsService.Read(Session["UserId"].ToString(), AjaxRequest, MailBoxId);
-            return Json(data.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+                var data = mailsService.Read(Session["UserId"].ToString(), AjaxRequest, MailBoxId);
+                HttpContext.Session["Mails"] = data;
+                return Json(data.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+            
         }
 
         [ValidateInput(false)]
@@ -85,6 +87,11 @@ namespace TelerikMvcWebMail.Controllers
             if (mail.Category == "Disable")
             {
                 bool Result = mailsService.UpdateEmailSubject(mail, "Disable");
+                return Json(Result, JsonRequestBehavior.AllowGet);
+            }
+            else if(mail.Category=="Deleted")
+            {
+                bool Result = mailsService.UpdateEmailSubject(mail, "Deleted");
                 return Json(Result, JsonRequestBehavior.AllowGet);
             }
             else
@@ -96,6 +103,8 @@ namespace TelerikMvcWebMail.Controllers
 
             return Json(new[] { mail }.ToDataSourceResult(request, ModelState));
         }
+       
+        
 
         [ValidateInput(false)]
         public ActionResult Create([DataSourceRequest] DataSourceRequest request, MailViewModel mail)
@@ -109,18 +118,32 @@ namespace TelerikMvcWebMail.Controllers
             return Json(new[] { mail }.ToDataSourceResult(request, ModelState));
         }
 
-        public ActionResult GetSelectedMailBoxData(long MailBoxId, string Defoult)
+        public ActionResult GetSelectedMailBoxData(long MailBoxId, string Defoult,string SerchedFolderString=null)
         {
             long DefoultFolderId = 0;
             TelerikMvcWebMail.DataLayer.CommonFunctions Obj = new DataLayer.CommonFunctions();
             List<MailBoxFolderModel> Model = Obj.MailBoxFolderList(MailBoxId, Session["UserId"].ToString());
-            List<Folders> _FolderList = Model.Select(x => new Folders
+            List<Folders> _FolderList = new List<Folders>();
+            if (string.IsNullOrEmpty(SerchedFolderString))
             {
-                MailBox = MailBoxId.ToString(),
-                text = x.MailBoxFolderName,
-                value = x.MailBoxFolderId.ToString(),
-                Owner= x.Owner
-            }).ToList();
+                _FolderList = Model.Select(x => new Folders
+                {
+                    MailBox = MailBoxId.ToString(),
+                    text = x.MailBoxFolderName,
+                    value = x.MailBoxFolderId.ToString(),
+                    Owner = x.Owner
+                }).ToList();
+            }
+            else
+            {
+                _FolderList = Model.Where(x=>x.MailBoxFolderName.ToUpper().Contains(SerchedFolderString.ToUpper())).Select(x => new Folders
+                {
+                    MailBox = MailBoxId.ToString(),
+                    text = x.MailBoxFolderName,
+                    value = x.MailBoxFolderId.ToString(),
+                    Owner = x.Owner
+                }).ToList();
+            }
             if (!string.IsNullOrEmpty(Defoult))
             {
                 DefoultFolderId = Model.Select(x => x.MailBoxFolderId).Take(1).FirstOrDefault();

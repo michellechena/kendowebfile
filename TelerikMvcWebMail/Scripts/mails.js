@@ -106,6 +106,10 @@ function mailMenuSelect(e) {
         case "unread":
             mailMarkAsReadUnread("unread");
             break;
+        case "NewFolder":
+           
+            window.location.href = "../Home/MailBoxFolders";
+            break;
         case "print":
             mailPrint();
             break;
@@ -252,14 +256,14 @@ function selectCategory(e) {
 
 // Filter grid according to the currently selected mails category
 function filterGrid(selectedText) {
-
+   
     var mailsGrid = $("#mainWidget").data("kendoGrid");
     if (!mailsGrid) {
         window.location.href = baseUrl + '/Home/Index';
     } else {
         mailsGrid.dataSource.filter({ field: "Category", operator: "contains", value: selectedText });
     }
-    
+    $("#mainWidget").find('tbody').css("display", "");
 }
 
 // Get the number of mails in each category
@@ -334,6 +338,7 @@ function dataSourceChange(e) {
 }
 
 function dataSourceRequestEnd(e) {
+
     setTimeout(function () {
         var grid = $("#mainWidget").data("kendoGrid");
         if (grid.dataSource.view().length == 0) {
@@ -349,8 +354,64 @@ function dataSourceRequestEnd(e) {
     }
 }
 
+function getFolderList(FromSearchFolder)
+{
+    $.ajax({
+        url: baseUrl + '/Home/Read?AjaxRequest=YES&MailBoxId=' + $("#ListOfMailBox").val(),
+        async: false,
+        success: function (gridData) {
+            //var gridData = {};
+            //  gridData.Data = $("#mainWidget").data("kendoGrid").dataSource.view();
+            $.ajax({
+                url: '/Home/GetSelectedMailBoxData',
+                cache: false,
+                async: false,
+                data: { MailBoxId: $("#ListOfMailBox").val(), SerchedFolderString: $("#txtFolderSearch").val()},
+                success: function (MailBoxFolders) {
+                    $('#MoveMenu').find('.k-menu-group').html('');
+                    var numbers = getinitialNumberOfItems(gridData.Data, MailBoxFolders);
+
+                    for (var FolderCount = 0; FolderCount < MailBoxFolders.length; FolderCount++) {
+                        var FolderName = MailBoxFolders[FolderCount].value;
+                        MailBoxFolders[FolderCount].number = numbers[FolderName].TotalCount;
+                        MailBoxFolders[FolderCount].Active = numbers[FolderName].ActiveCount;
+                        MailBoxFolders[FolderCount].Disable = numbers[FolderName].DisabledCount;
+                        var FolderId = MailBoxFolders[FolderCount].value;
+
+                        $(".disabledMenu").remove();
+                        if (MailBoxFolders[FolderCount].Owner == "YES") {
+                            var newds = '<li class="k-item k-state-default" id="' + FolderId + '" operation="moveDelete" role="menuitem" aria-disabled="false"><span class="k-link">' + MailBoxFolders[FolderCount].text + '</span></li>';
+                            $('#MoveMenu').find('.k-menu-group').append(newds);
+
+                            $('#Disable').css("display", "");
+                        }
+                        else {
+                            if (FolderCount == 0) {
+                                var newds = '<li class="k-item k-state-default"  role="menuitem" aria-disabled="false"><span class="k-link" style="color:red">You Dont have permistion </span></li>';
+                                $('#MoveMenu').find('.k-menu-group').append(newds);
+                            }
+                            $('#Disable').css("display", "none");
+                        }
+                    }
+
+                    populateNavigationTree(MailBoxFolders, FromSearchFolder);
+
+                },
+                error: function (error) {
+                    // alert('Error');
+                }
+            })
+
+        }
+
+    });
+    
+}
+
+
 // Attach mails grid events
 function mailGridDataBound(e) {
+   
     var grid = e.sender;
 
     for (var i = 0; i < grid.tbody.find(">tr").length; i++) {
@@ -362,57 +423,10 @@ function mailGridDataBound(e) {
     
    
     bindCheckboxes();
-    polulateSelectedRows(grid);    
-    $.ajax({
-        url: baseUrl + '/Home/Read?AjaxRequest=YES&MailBoxId='+$("#ListOfMailBox").val(),
-        async:false,
-        success: function (gridData) {
-            //var gridData = {};
-          //  gridData.Data = $("#mainWidget").data("kendoGrid").dataSource.view();
-            $.ajax({
-                url: '/Home/GetSelectedMailBoxData',
-                cache: false,
-                async: false,
-                data: { MailBoxId: $("#ListOfMailBox").val() },
-                success: function (MailBoxFolders) {
-                    $('#MoveMenu').find('.k-menu-group').html('');
-                    var numbers = getinitialNumberOfItems(gridData.Data, MailBoxFolders);
-                    
-                    for (var FolderCount = 0; FolderCount < MailBoxFolders.length; FolderCount++) {
-                        var FolderName = MailBoxFolders[FolderCount].value;
-                        MailBoxFolders[FolderCount].number = numbers[FolderName].TotalCount;
-                        MailBoxFolders[FolderCount].Active = numbers[FolderName].ActiveCount;
-                        MailBoxFolders[FolderCount].Disable = numbers[FolderName].DisabledCount;
-                        var FolderId=MailBoxFolders[FolderCount].value;
-                       
-                        $(".disabledMenu").remove();
-                        if (MailBoxFolders[FolderCount].Owner == "YES") {
-                            var newds = '<li class="k-item k-state-default" id="' + FolderId + '" operation="moveDelete" role="menuitem" aria-disabled="false"><span class="k-link">' + MailBoxFolders[FolderCount].text + '</span></li>';
-                            $('#MoveMenu').find('.k-menu-group').append(newds);                          
-                            
-                            $('#Disable').css("display","");
-                        }
-                        else {
-                            if(FolderCount == 0)
-                            {                                                            
-                                var newds = '<li class="k-item k-state-default"  role="menuitem" aria-disabled="false"><span class="k-link" style="color:red">You Dont have permistion </span></li>';
-                                $('#MoveMenu').find('.k-menu-group').append(newds);
-                            }
-                            $('#Disable').css("display", "none");
-                        }
-                    }
-                   
-                    populateNavigationTree(MailBoxFolders);
-                   
-                },
-                error: function (error) {
-                    // alert('Error');
-                }
-            })
-            
-        }
+    polulateSelectedRows(grid);
 
-    });
+    getFolderList();
+   
     if (grid.select().length === 1) {
         $(".mail-details-wrapper").removeClass("empty");
     }

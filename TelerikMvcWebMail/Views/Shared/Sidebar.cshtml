@@ -13,21 +13,34 @@
 </script>
 
 <aside class="main-sidebar">
-    <div class="content">
-        @*<div class="col-md-6">
-        <span class="new-btn new-@(ViewBag.Title)"style="font-size:14px !important;padding-left:0px !important ">@(ViewBag.Title)</span>
-       </div>*@
-        <div class="col-md-12">
-            <a class="new-btn" href="/Home/MailBoxFolders" style="font-size:14px !important;padding-left:0px !important">Folder</a>
+    <div class="content">       
+        <div class="form-group col-md-12" style="padding:10px 5px 0px 3px">
+            <div class="input-group">
+                <input type="text" class="form-control" id="txtFolderSearch" />
+                <span class="input-group-addon">
+                    <i class="fa fa-search"></i>
+                </span>
+            </div>
         </div>
         <div class="col-md-12 " style="padding:0px !important">
         @(Html.Kendo().TreeView()
             .Name("navigationTreeView")
-            .DragAndDrop(true)
             .Events(e => e.Select("selectCategory"))
             .TemplateId("treeview-template")
         )
          </div>
-    </div>
-    @Html.Partial("SidebarFooter")
+    </div>    
 </aside>
+<script>
+    $("#txtFolderSearch").keyup(function () {
+        getFolderList("FromSearchFolder");
+        $("#mainWidget").find('tbody').css("display", "none");
+        
+        
+    });
+
+
+
+    
+
+</script>

@@ -84,7 +84,7 @@ function tasksGridDataBound(e) {
                 number: numbers.Work
             }];
 
-            populateNavigationTree(data);
+            //populateNavigationTree(data);
         }
     });
 }

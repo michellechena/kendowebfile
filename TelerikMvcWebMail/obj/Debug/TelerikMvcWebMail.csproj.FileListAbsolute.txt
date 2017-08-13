@@ -208,33 +208,93 @@ C:\Users\sudhir.shinde\Downloads\25-07-2015-20170725T093048Z-001\25-07-2015\web-
 C:\Users\sudhir.shinde\Downloads\25-07-2015-20170725T093048Z-001\25-07-2015\web-mail-sample-app-mvc-master\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.csprojResolveAssemblyReference.cache
 C:\Users\sudhir.shinde\Downloads\25-07-2015-20170725T093048Z-001\25-07-2015\web-mail-sample-app-mvc-master\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.dll
 C:\Users\sudhir.shinde\Downloads\25-07-2015-20170725T093048Z-001\25-07-2015\web-mail-sample-app-mvc-master\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.pdb
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\TelerikMvcWebMail.dll.config
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\TelerikMvcWebMail.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\TelerikMvcWebMail.pdb
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Antlr3.Runtime.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.SqlServer.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Microsoft.Web.Infrastructure.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Newtonsoft.Json.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Helpers.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Mvc.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Optimization.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Razor.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Deployment.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Razor.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\WebGrease.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Antlr3.Runtime.pdb
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.xml
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.SqlServer.xml
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Newtonsoft.Json.xml
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Helpers.xml
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Mvc.xml
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Optimization.xml
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Razor.xml
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.xml
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Deployment.xml
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Razor.xml
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.csprojResolveAssemblyReference.cache
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.dll
-C:\POC\phase6\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.pdb
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\TelerikMvcWebMail.dll.config
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\TelerikMvcWebMail.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\TelerikMvcWebMail.pdb
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Antlr3.Runtime.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.SqlServer.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Newtonsoft.Json.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Helpers.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Mvc.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Optimization.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Razor.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Deployment.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Razor.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\WebGrease.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Antlr3.Runtime.pdb
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.xml
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.SqlServer.xml
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Newtonsoft.Json.xml
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Helpers.xml
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Mvc.xml
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Optimization.xml
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Razor.xml
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.xml
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Deployment.xml
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Razor.xml
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.csprojResolveAssemblyReference.cache
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.dll
+C:\Users\sudhir.shinde\Downloads\web-mail-sample-app-mvc-master (1)\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.pdb
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\TelerikMvcWebMail.dll.config
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\TelerikMvcWebMail.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\TelerikMvcWebMail.pdb
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Antlr3.Runtime.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.SqlServer.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Microsoft.Web.Infrastructure.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Newtonsoft.Json.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Helpers.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Mvc.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Optimization.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Razor.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Deployment.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Razor.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\WebGrease.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Antlr3.Runtime.pdb
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.xml
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.SqlServer.xml
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Newtonsoft.Json.xml
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Helpers.xml
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Mvc.xml
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Optimization.xml
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Razor.xml
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.xml
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Deployment.xml
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Razor.xml
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.csprojResolveAssemblyReference.cache
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.dll
+C:\POC\phase8\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.pdb
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\TelerikMvcWebMail.dll.config
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\TelerikMvcWebMail.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\TelerikMvcWebMail.pdb
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Antlr3.Runtime.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.SqlServer.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Microsoft.Web.Infrastructure.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Newtonsoft.Json.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Helpers.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Mvc.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Optimization.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Razor.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Deployment.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Razor.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\WebGrease.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Antlr3.Runtime.pdb
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.xml
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\EntityFramework.SqlServer.xml
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\Newtonsoft.Json.xml
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Helpers.xml
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Mvc.xml
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Optimization.xml
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.Razor.xml
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.xml
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Deployment.xml
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\bin\System.Web.WebPages.Razor.xml
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.csprojResolveAssemblyReference.cache
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.dll
+C:\POC\phase7\web-mail-sample-app-mvc-master\TelerikMvcWebMail\obj\Debug\TelerikMvcWebMail.pdb

@@ -9,21 +9,26 @@ function setSelectedNode(selected) {
     }
 }
 
-function populateNavigationTree(data) {
+function populateNavigationTree(data, FromSearchFolder) {
     
     //alert(Cookies.get('ChangedIdOfFolder') + selected);
     var newDataSource = new kendo.data.HierarchicalDataSource({ data: data });
     var navigationTreeView = $('#navigationTreeView').data('kendoTreeView');
     navigationTreeView.setDataSource(newDataSource);
-    if (selected) {
-        if (Cookies.get('ChangedIdOfFolder') == "0") {
-            setSelectedNode("0");
-        }
-        else {
-            setSelectedNode(selected);
-        }
+    if (FromSearchFolder == "FromSearchFolder") {
+        setSelectedNode("");
     }
     else {
-        setSelectedNode("0");
+        if (selected) {
+            if (Cookies.get('ChangedIdOfFolder') == "0") {
+                setSelectedNode("0");
+            }
+            else {
+                setSelectedNode(selected);
+            }
+        }
+        else {
+            setSelectedNode("0");
+        }
     }
 }
