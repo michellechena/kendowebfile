@@ -5,14 +5,20 @@
 @section PageStyles {
     <link href="@Url.Content("~/Content/mail.css")" rel="stylesheet" type="text/css" />
 }
+<style>
+    .HideElement{
+        display:none;
+    }
+    </style>
 
 @model IEnumerable<TelerikMvcWebMail.Models.MailViewModel>
 
 @Html.Partial("Sidebar")
 
+<input type="hidden" id="txtFirstFolderId" value="@ViewBag.FirstFolderId">
 <section class="main-section horizontal">
     <div class="toolbar">
-        <div class="left">
+         <div class="left" >
             @(Html.Kendo().Menu()
                 .Name("mailMenu")
                 .OpenOnClick(true)
@@ -53,6 +59,8 @@
                             children.Add().Text("Mark as read").HtmlAttributes(new { @id = "read", @operation = "read" });
                             children.Add().Text("Print").HtmlAttributes(new { @id = "print", @operation = "print" });
                         });
+                   
+                    
                 })
                 .Events(e => e.Select("mailMenuSelect"))
             )
@@ -63,12 +71,13 @@
         </div>
     </div>
     <div class="inner-section">
-        <div class="mail-grid">
+        <div class="mail-grid" id="EMailDiv">
             <span class="searchbox">
                 <input type="text" class="k-input search-textbox" placeholder="Search mail ..." name="to-textbox">
             </span>
             @(Html.Kendo().Grid(Model)
                 .Name("mainWidget")
+                .HtmlAttributes(new {@class="HideElement" })
                 .Columns(columns =>
                 {
                     columns.Bound(p => p.ID)
@@ -84,6 +93,9 @@
                         .ClientTemplate("<p>#= From #</p><p>#= Subject #</p>")
                         .Hidden(true);
                     columns.Bound(p => p.Date).HtmlAttributes(new { @class = "date" }).Title("Date").Format("{0:g}");
+                    columns.Bound(p => p.Status).Hidden(true);
+                    columns.Bound(p => p.Status).Title("Status").ClientTemplate("# if (Status == 'A') { # <span class='label label-primary'>Active</span> # } else if (Status == 'D') { #<span class='label label-default'>Disabled</span>  # } else if (Status == 'I') { # <span class='label label-info'>InActive</span> # } else if (Status == 'R') { #<span class='label label-warning'>Retired</span>  # } #");
+                    columns.Bound(p => p.Owner).Title(" ").ClientTemplate("#if (Owner == 'YES') { # <span class='label label-info' onClick=FunctionEditEmail('#=ID#')>Edit Subject</span> # }#");
                 })
                 .Scrollable()
                 .Sortable()
@@ -139,12 +151,44 @@
         )
     </div>
 </section>
+<div>
+    @(Html.Kendo().Window()
+    .Name("EditEmailPopup")
+    .Title("Update Email Detailes")
+    .Content("loading user info...")
+    .Modal(true)
+    .Draggable()    
+    .Resizable()
+    .Width(600)
+    .Visible(false)
+    )
+    </div>
 <script>
     function SendSelectdMailBoxId()
     { 
             return {
                 MailBoxId: $("#ListOfMailBox").val()
             }        
+    }
+
+    function FunctionEditEmail(id)
+    {
+        $.ajax({
+            url: '/Home/ReadMailDetails',
+            cache: false,
+            async: false,
+            data: { MailId: id },
+            success: function (EditContent) {
+              
+                $("#EditEmailPopup").data("kendoWindow").content(EditContent);
+                $("#EditEmailPopup").data("kendoWindow").open().center();
+            },
+            error: function (error) {
+                 alert('Error');
+            }
+        })
+        
+     
     }
 </script>
 

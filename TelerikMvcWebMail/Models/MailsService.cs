@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace TelerikMvcWebMail.Models
 {
@@ -18,13 +19,13 @@ namespace TelerikMvcWebMail.Models
            
         }
 
-        public IList<MailViewModel> Read()
+        public IList<MailViewModel> Read(string UserId,string AjaxRequest=null,string MailBoxId=null)
         {
+            long _UserId = Convert.ToInt32(UserId);
+            long _MailBoxId = Convert.ToInt32(MailBoxId);           
             IList<MailViewModel> result = HttpContext.Current.Session["Mails"] as IList<MailViewModel>;
-
-            if (result == null || UpdateDatabase)
-            {
-                result = entities.Mails.Select(message => new MailViewModel
+                   
+                result = entities.Mails.Where(x=>x.MailBoxFolder.MailBox.MailBoxId== _MailBoxId).Select(message => new MailViewModel
                 {
                     ID = message.MessageID,
                     IsRead = message.IsRead,
@@ -33,8 +34,10 @@ namespace TelerikMvcWebMail.Models
                     Subject = message.Subject,
                     Date = message.Received,
                     Text = message.Body,
-                    Category = message.Category,
-                    Email = message.Email
+                    Category = message.Category.ToString(),
+                    Email = message.Email,
+                    Status=message.Status,
+                    Owner=message.MailBoxFolder.MailBox.UserId== _UserId?"YES":"NO"
                 }).ToList();
 
                 if (!UpdateDatabase)
@@ -42,8 +45,29 @@ namespace TelerikMvcWebMail.Models
                     HttpContext.Current.Session["Mails"] = result;
                 }
                 
-            }
+            
 
+            return result;
+        }
+        public MailViewModel ReadMailDetails(string MailId)
+        {
+            long _MailId = Convert.ToInt32(MailId);
+            MailViewModel result = new Models.MailViewModel();
+
+            result = entities.Mails.Where(x => x.MessageID== _MailId).Select(message => new MailViewModel
+            {
+                ID = message.MessageID,
+                IsRead = message.IsRead,
+                From = message.From,
+                To = message.To,
+                Subject = message.Subject,
+                Date = message.Received,
+                Text = message.Body,
+                Category = message.Category.ToString(),
+                Email = message.Email,
+                Status = message.Status,
+            }).FirstOrDefault();
+            
             return result;
         }
 
@@ -51,12 +75,12 @@ namespace TelerikMvcWebMail.Models
         {
             if (!UpdateDatabase)
             {
-                var first = Read().OrderByDescending(e => e.ID).FirstOrDefault();
+                var first = Read(HttpContext.Current.Session["UserId"].ToString()).OrderByDescending(e => e.ID).FirstOrDefault();
                 var id = (first != null) ? first.ID : 0;
 
                 mail.ID = id + 1;
 
-                Read().Insert(0, mail);
+                Read(HttpContext.Current.Session["UserId"].ToString()).Insert(0, mail);
             }
             else
             {
@@ -71,8 +95,10 @@ namespace TelerikMvcWebMail.Models
 
         public void Update(MailViewModel mail)
         {
+            UpdateDatabase = true;
             if (!UpdateDatabase)
             {
+                
                 var target = One(e => e.ID == mail.ID);
 
                 if (target != null)
@@ -103,12 +129,63 @@ namespace TelerikMvcWebMail.Models
 
         public MailViewModel One(Func<MailViewModel, bool> predicate)
         {
-            return Read().FirstOrDefault(predicate);
+            return Read(HttpContext.Current.Session["UserId"].ToString()).FirstOrDefault(predicate);
         }
 
         public void Dispose()
         {
             entities.Dispose();
+        }
+
+       public int GetFirstFolderId(string UserId)
+        {
+            long Id = Convert.ToInt32(UserId);
+            int MailBoxId = 0;
+            int FolderId = 0;
+            using (var Entity = new WebMailEntities())
+            {
+                MailBoxId = Entity.MailBoxes.Where(s => s.UserId == Id).OrderBy(s => s.MailBoxSequence).Take(1).Select(z => z.MailBoxId).FirstOrDefault();
+
+            }
+            using (var Entity = new WebMailEntities())
+            {
+                FolderId = Entity.MailBoxFolders.Where(s => s.MailBoxId == MailBoxId).OrderBy(s => s.Sequence).Take(1).Select(z => z.MailBoxFolderId).FirstOrDefault();
+
+            }
+            return FolderId;
+        }
+        public bool UpdateEmailSubject(MailViewModel mail,string UpdateOnlyDisable=null)
+        {
+            try
+            {
+                using (var Entity = new WebMailEntities())
+                {
+                    Mail Mail = Entity.Mails.Where(s => s.MessageID == mail.ID).FirstOrDefault();
+                    if (UpdateOnlyDisable == "Disable")
+                    {
+                        if (Mail != null)
+                        {                            
+                            Mail.Status ="D";
+                            Entity.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        if (Mail != null)
+                        {
+                            Mail.Subject = mail.Subject;
+                            Mail.Status = mail.Status;
+                            Entity.SaveChanges();
+                        }
+                    }
+                    return true;
+                }
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+
         }
     }
 }

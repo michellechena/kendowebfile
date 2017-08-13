@@ -5,8 +5,11 @@
 @Scripts.Render("~/Scripts/sidebar.js")
 
 <script id="treeview-template" type="text/kendo-ui-template">
-    <span class="folder-name">#: item.text #</span>
-    <span class="number">#: item.number #</span>
+    <div >#: item.text #</div>     
+    <div style="display:inline"> T:#: item.number #</div> 
+    <div style="margin-left:8px;display:inline"> A:#: item.Active #</div>
+    <div  style="margin-left:8px;display:inline"> D:#: item.Disable #</div> 
+    
 </script>
 
 <aside class="main-sidebar">

@@ -6,22 +6,27 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
-using TelerikMvcWebMail.Common;
+using TelerikMvcWebMail.Filter;
 using TelerikMvcWebMail.Models;
 
 namespace TelerikMvcWebMail.Controllers
 {
+    [SessionExpire]
     public class HomeController : Controller
     {
         private MailsService mailsService;
 
         public HomeController()
         {
+
             mailsService = new MailsService(new WebMailEntities());
+
         }
 
         public ActionResult Index()
         {
+            var FirstFolderId = mailsService.GetFirstFolderId(Session["UserId"].ToString());
+            ViewBag.FirstFolderId = FirstFolderId;
             return View();
         }
 
@@ -46,17 +51,27 @@ namespace TelerikMvcWebMail.Controllers
             return PartialView();
         }
 
-        public ActionResult Read([DataSourceRequest]DataSourceRequest request,string MailBoxId)
+        public ActionResult Read([DataSourceRequest]DataSourceRequest request, string AjaxRequest,string MailBoxId)
         {
-            return Json(mailsService.Read().ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
+            var data = mailsService.Read(Session["UserId"].ToString(), AjaxRequest, MailBoxId);
+            return Json(data.ToDataSourceResult(request), JsonRequestBehavior.AllowGet);
         }
 
         [ValidateInput(false)]
         public ActionResult Update([DataSourceRequest] DataSourceRequest request, MailViewModel mail)
         {
-            if (mail != null && ModelState.IsValid)
+            if (mail.Category == "Disable")
             {
-                mailsService.Update(mail);
+                bool Result = mailsService.UpdateEmailSubject(mail, "Disable");
+                return Json(Result, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                if (mail != null && ModelState.IsValid)
+                {
+
+                    mailsService.Update(mail);
+                }
             }
 
             return Json(new[] { mail }.ToDataSourceResult(request, ModelState));
@@ -73,11 +88,42 @@ namespace TelerikMvcWebMail.Controllers
             return Json(new[] { mail }.ToDataSourceResult(request, ModelState));
         }
 
-        public ActionResult GetSelectedMailBoxData(string SelectedMailBox)
+        public ActionResult GetSelectedMailBoxData(long MailBoxId, string Defoult)
         {
-            List<Folders> _FolderList= Common.Common.FolderList(SelectedMailBox);
-            return Json (_FolderList,JsonRequestBehavior.AllowGet);
+            long DefoultFolderId = 0;
+            TelerikMvcWebMail.DataLayer.CommonFunctions Obj = new DataLayer.CommonFunctions();
+            List<MailBoxFolderModel> Model = Obj.MailBoxFolderList(MailBoxId, Session["UserId"].ToString());
+            List<Folders> _FolderList = Model.Select(x => new Folders
+            {
+                MailBox = MailBoxId.ToString(),
+                text = x.MailBoxFolderName,
+                value = x.MailBoxFolderId.ToString(),
+                Owner= x.Owner
+            }).ToList();
+            if (!string.IsNullOrEmpty(Defoult))
+            {
+                DefoultFolderId = Model.Select(x => x.MailBoxFolderId).Take(1).FirstOrDefault();
+                return Json(DefoultFolderId, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(_FolderList, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [ValidateInput(false)]
+        public ActionResult ReadMailDetails(string MailId)
+        {
+            MailViewModel Model = new MailViewModel();
+            Model = mailsService.ReadMailDetails(MailId);
+            return PartialView("EmailDetailes", Model);
+
         }
 
+        [HttpPost]
+        public ActionResult UpdateEmailSubject(MailViewModel Model)
+        {
+            bool Result = mailsService.UpdateEmailSubject(Model);
+            return Json(Result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

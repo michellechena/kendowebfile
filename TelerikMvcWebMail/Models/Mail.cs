@@ -22,6 +22,9 @@ namespace TelerikMvcWebMail.Models
         public Nullable<System.DateTime> Received { get; set; }
         public Nullable<bool> IsRead { get; set; }
         public string To { get; set; }
-        public string Category { get; set; }
+        public Nullable<int> Category { get; set; }
+        public string Status { get; set; }
+    
+        public virtual MailBoxFolder MailBoxFolder { get; set; }
     }
 }

@@ -122,13 +122,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Common\Common.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="DataLayer\UsersDataLayer.cs" />
+    <Compile Include="Filter\SessionExpire.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -141,17 +142,30 @@
     <Compile Include="Models\Mail.cs">
       <DependentUpon>WebMail.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MailBox.cs">
+      <DependentUpon>WebMail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MailBoxAccess.cs">
+      <DependentUpon>WebMail.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MailBoxFolder.cs">
+      <DependentUpon>WebMail.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MailsService.cs" />
     <Compile Include="Models\MailViewModel.cs" />
     <Compile Include="Models\Person.cs">
       <DependentUpon>WebMail.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SignIn.cs" />
     <Compile Include="Models\Task.cs">
       <DependentUpon>WebMail.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TasksService.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
+    <Compile Include="Models\User.cs">
+      <DependentUpon>WebMail.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\WebMail.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -187,6 +201,7 @@
       <DependentUpon>contacts.scss</DependentUpon>
     </Content>
     <Content Include="Content\contacts\default-contact.png" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Fonts\noto\LICENSE_OFL.txt" />
     <Content Include="Content\mail.css">
       <DependentUpon>mail.scss</DependentUpon>
@@ -318,7 +333,6 @@
     <Content Include="Fonts\noto\NotoSansUI-BoldItalic.ttf" />
     <Content Include="Fonts\noto\NotoSansUI-Italic.ttf" />
     <Content Include="Fonts\noto\NotoSansUI-Regular.ttf" />
-    <Content Include="Views\Shared\_PartialMailBoxFolders.cshtml" />
     <EntityDeploy Include="Models\WebMail.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>WebMail.Designer.cs</LastGenOutput>
@@ -326,6 +340,7 @@
     <Content Include="Models\WebMail.edmx.diagram">
       <DependentUpon>WebMail.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Home\EmailDetailes.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

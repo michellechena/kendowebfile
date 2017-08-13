@@ -10,13 +10,18 @@ function setSelectedNode(selected) {
 }
 
 function populateNavigationTree(data) {
-  
+    
+    //alert(Cookies.get('ChangedIdOfFolder') + selected);
     var newDataSource = new kendo.data.HierarchicalDataSource({ data: data });
     var navigationTreeView = $('#navigationTreeView').data('kendoTreeView');
     navigationTreeView.setDataSource(newDataSource);
-
     if (selected) {
-        setSelectedNode(selected);
+        if (Cookies.get('ChangedIdOfFolder') == "0") {
+            setSelectedNode("0");
+        }
+        else {
+            setSelectedNode(selected);
+        }
     }
     else {
         setSelectedNode("0");

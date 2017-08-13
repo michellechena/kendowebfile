@@ -21,7 +21,8 @@
         }
     </script>
     <link type="image/x-icon" href="~/favicon-progress.ico" rel="shortcut icon">
-
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.common.min.css" rel="stylesheet" />
     <link href="http://kendo.cdn.telerik.com/2017.1.118/styles/kendo.mobile.all.min.css" rel="stylesheet" />
@@ -33,7 +34,7 @@
     @Styles.Render("~/Content/css")
     @RenderSection("PageStyles", false)
     @RenderSection("PageStylesPartial", false)
-
+   
     <script src="http://kendo.cdn.telerik.com/2017.1.118/js/jquery.min.js"></script>
     <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.all.min.js"></script>
     <script src="http://kendo.cdn.telerik.com/2017.1.118/js/kendo.aspnetmvc.min.js"></script>
@@ -52,8 +53,8 @@
         <div class="image-wrapper">
             <img src="http://demos.telerik.com/kendo-ui/content/web/Customers/PICCO.jpg" style="border-radius: 100%" />
         </div>
-        <p class="name">Antonio Morandi</p>
-        <p>antonio.morandi@progress.com</p>
+        <p class="name">@Session["FullName"]</p>
+        <p>@Session["UserEmail"]</p>
         @(Html.Kendo().Button()
         .Name("signInButton")
         .HtmlAttributes(new { @class = "k-primary" })
@@ -73,17 +74,18 @@
                 WebMail
             </h1>
         </a>*@
+       
         @{
-            var MainBoxList = TelerikMvcWebMail.Common.Common.MailBoxList();
+            TelerikMvcWebMail.DataLayer.CommonFunctions _MailBoxList = new TelerikMvcWebMail.DataLayer.CommonFunctions();
+            var MailBox=  _MailBoxList.MailBoxList(Convert.ToInt32(Session["UserId"]), "DRP");
         }
-
         @(Html.Kendo().DropDownList()
           .Name("ListOfMailBox")
           .DataTextField("Text")
           .DataValueField("Value")
           .Events(e => e.Change("DrpMailBoxChnages"))
-          .BindTo(@MainBoxList)          
-          .HtmlAttributes(new { style = "width: 10%;background-color:white;margin-left:2%;margin-top:1%" })
+          .BindTo(MailBox)          
+          .HtmlAttributes(new { style = "width:13%;font-size:14px;background-color:white;margin-left:1%;margin-top:1%" })
         )
             
         @(Html.Kendo().Menu()
@@ -110,9 +112,27 @@
     </content>
 </body>
 </html>
+
 <script>
     function DrpMailBoxChnages(e)
-    {        
+    {
+     //   debugger;
+        
         $("#mainWidget").data("kendoGrid").dataSource.read();
+        $.ajax({
+            url: '/Home/GetSelectedMailBoxData',
+            cache: false,
+            async: false,
+            data: {MailBoxId: $("#ListOfMailBox").val(), Defoult: "YES" },
+            success: function (DefoultFolder) {                
+                Cookies.set('ChangedIdOfFolder', "0");                              
+                filterGrid(DefoultFolder);
+                
+            },
+            error: function (error) {
+                // alert('Error');
+            }
+        })
+        
     }
     </script>

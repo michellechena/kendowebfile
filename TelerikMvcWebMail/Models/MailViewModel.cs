@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,7 +14,7 @@ namespace TelerikMvcWebMail.Models
         public bool? IsRead { get; set; }
 
         public string From { get; set; }
-
+        
         public string Subject { get; set; }
 
         public DateTime? Date { get; set; }
@@ -26,7 +27,8 @@ namespace TelerikMvcWebMail.Models
         public string To { get; set; }
 
         public string Email { get; set; }
-
+        public string Status { get; set; }
+        public string Owner { get; set; }
         internal Mail ToEntity()
         {
             return new Mail
@@ -37,10 +39,44 @@ namespace TelerikMvcWebMail.Models
                 Received = Date,
                 IsRead = IsRead,
                 To = To,
-                Category = Category,
+                Category =Convert.ToInt32(Category),
                 MessageID = ID,
-                Email = Email
+                Email = Email,
+                Status= Status,
+            
             };
         }
+    }
+
+
+    public class MailBoxModel
+    {
+        public int MailBoxId { get; set; }
+        public string MailBoxName { get; set; }
+        public int UserId { get; set; }
+        public long MailBoxSequence { get; set; }
+        public virtual User User { get; set; }
+        public string Owener { get; set; }
+
+    }
+
+    public class MailBoxFolderModel
+    {
+        public int MailBoxFolderId { get; set; }
+        public string MailBoxFolderName { get; set; }
+        public int MailBoxId { get; set; }
+        public long Sequence { get; set; }
+        public string Owner { get; set; }
+    }
+
+    public class Folders
+    {
+        public string text { get; set; }
+        public string value { get; set; }
+        public string number { get; set; }
+        public string MailBox { get; set; }
+        public string Active { get; set; }
+        public string Disable { get; set; }
+        public string Owner { get; set; }
     }
 }
