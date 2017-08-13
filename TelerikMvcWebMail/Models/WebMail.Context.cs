@@ -30,8 +30,8 @@ namespace TelerikMvcWebMail.Models
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<MailBox> MailBoxes { get; set; }
-        public virtual DbSet<Mail> Mails { get; set; }
         public virtual DbSet<MailBoxAccess> MailBoxAccesses { get; set; }
         public virtual DbSet<MailBoxFolder> MailBoxFolders { get; set; }
+        public virtual DbSet<Mail> Mails { get; set; }
     }
 }

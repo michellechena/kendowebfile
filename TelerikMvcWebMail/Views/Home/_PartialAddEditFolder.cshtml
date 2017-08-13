@@ -18,11 +18,20 @@
                 $("#RuleSequnceDv").css("display", "");
                 $("#sortable-listA").html('');
                 $.each(Data, function (key, value) {
-                    var Sequence = '<li class="list-item" id=' + Data[key].MailBoxFolderId + '>' + Data[key].MailBoxFolderName + ' <i class="fa fa-sort" aria-hidden="true"></i></li>';
+                    var Sequence;
+                    if ('@Model.MailBoxFolderId' == Data[key].MailBoxFolderId)
+                    {
+                        Sequence = '<li class="list-item" id=' + Data[key].MailBoxFolderId + '><span id="NewRecordSequnceLi">' + Data[key].MailBoxFolderName + ' </span><i class="fa fa-sort" aria-hidden="true"></i></li>';
+                        
+                    }
+                    else {
+                        Sequence = '<li class="list-item" id=' + Data[key].MailBoxFolderId + '>' + Data[key].MailBoxFolderName + ' <i class="fa fa-sort" aria-hidden="true"></i></li>';
+                    }
+                    
                     $("#sortable-listA").append(Sequence);
                 });
                 if ('@Model.MailBoxFolderId' == 0 || '@Model.MailBoxFolderId' == "") {
-                    var Li = '<li class="list-item" id="NEWREC" style="background-color:#fa9f54 !important ">New Folder Sequense <i class="fa fa-sort" aria-hidden="true"></i></li>';
+                    var Li = '<li class="list-item" id="NEWREC" style="background-color:#fa9f54 !important "><span id="NewRecordSequnceLi">New Folder Sequense</span> <i class="fa fa-sort" aria-hidden="true"></i></li>';
                     $("#sortable-listA").append(Li);
                 }
             },
@@ -105,6 +114,11 @@
             $("#RuleSequnceDv").css("display", "");
         }
     });
+
+    $("#MailBoxFolderName").keyup(function () {
+        $("#NewRecordSequnceLi").html($("#MailBoxFolderName").val());
+    });
+    
 
     $("#FormAddEditFolder").submit(function (eventObj) {
       

@@ -24,6 +24,9 @@ namespace TelerikMvcWebMail.Models
         public string To { get; set; }
         public Nullable<int> Category { get; set; }
         public string Status { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public Nullable<bool> IsValid { get; set; }
     
         public virtual MailBoxFolder MailBoxFolder { get; set; }
     }

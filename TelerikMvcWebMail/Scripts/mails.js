@@ -23,7 +23,14 @@ $(document).ready(function () {
         $(".main-section").load(baseUrl + "/Home/NewMail");
         $(".main-section").removeClass("horizontal").removeClass("vertical");
     });
-
+    $('#MenuNewMail').on('click', function (e) {
+        $("#PartalViewContet").load(baseUrl + "/Home/GetNewEmail");
+        $("#PartalViewContet").css("display", "");
+        $("#mainViewContent").css("display", "none");
+        $("#IsParialViewLoaded").val("1");
+        $(".main-section").removeClass("horizontal").removeClass("vertical");
+    });
+    
     // Attach new mails handler
     $("#mainWidget").on("mousedown", "tr[role='row']", function (e) {
         if (e.which === 3) {
@@ -256,8 +263,7 @@ function filterGrid(selectedText) {
 }
 
 // Get the number of mails in each category
-function getinitialNumberOfItems(gridData, MailBoxFolders) {
- 
+function getinitialNumberOfItems(gridData, MailBoxFolders) {    
     var ActiveCount = 0;
     var DisabledCount = 0;    
     var numbers = { Inbox: { TotalCount: 0, ActiveCount: 0, DisabledCount: 0 } };
@@ -293,8 +299,20 @@ function getinitialNumberOfItems(gridData, MailBoxFolders) {
     return numbers;
 }
 
+$("body").on("click", "#BtnCloseNewEmail", function () {   
+    $("#PartalViewContet").css("display", "none");
+    $("#mainViewContent").css("display", "");
+});
+$("#navigationTreeView").click(function () {
+    if ($("#IsParialViewLoaded").val() == "1") {
+        $("#PartalViewContet").css("display", "none");
+        $("#mainViewContent").css("display", "");
+        $("#IsParialViewLoaded").val("0");
+    }
+});
+
 function dataSourceChange(e) {
-  
+   
     var grid = $("#mainWidget").data("kendoGrid");
     var treeview = $("#navigationTreeView").data("kendoTreeView");
     if (e.action === "sync") {
@@ -312,6 +330,7 @@ function dataSourceChange(e) {
             }
         }
     }
+    
 }
 
 function dataSourceRequestEnd(e) {
@@ -341,13 +360,15 @@ function mailGridDataBound(e) {
         }
     }
     
+   
     bindCheckboxes();
     polulateSelectedRows(grid);    
     $.ajax({
         url: baseUrl + '/Home/Read?AjaxRequest=YES&MailBoxId='+$("#ListOfMailBox").val(),
         async:false,
         success: function (gridData) {
-            
+            //var gridData = {};
+          //  gridData.Data = $("#mainWidget").data("kendoGrid").dataSource.view();
             $.ajax({
                 url: '/Home/GetSelectedMailBoxData',
                 cache: false,
@@ -367,9 +388,9 @@ function mailGridDataBound(e) {
                         $(".disabledMenu").remove();
                         if (MailBoxFolders[FolderCount].Owner == "YES") {
                             var newds = '<li class="k-item k-state-default" id="' + FolderId + '" operation="moveDelete" role="menuitem" aria-disabled="false"><span class="k-link">' + MailBoxFolders[FolderCount].text + '</span></li>';
-                            $('#MoveMenu').find('.k-menu-group').append(newds);
-                            var disabledMenu = '<li class="k-item k-state-default disabledMenu" id="Disable" operation="moveDisabled" role="menuitem" aria-disabled="false"><span class="k-link">Disable</span></li>';
-                            $('#mailMenu').append(disabledMenu);
+                            $('#MoveMenu').find('.k-menu-group').append(newds);                          
+                            
+                            $('#Disable').css("display","");
                         }
                         else {
                             if(FolderCount == 0)
@@ -377,8 +398,10 @@ function mailGridDataBound(e) {
                                 var newds = '<li class="k-item k-state-default"  role="menuitem" aria-disabled="false"><span class="k-link" style="color:red">You Dont have permistion </span></li>';
                                 $('#MoveMenu').find('.k-menu-group').append(newds);
                             }
+                            $('#Disable').css("display", "none");
                         }
                     }
+                   
                     populateNavigationTree(MailBoxFolders);
                    
                 },
@@ -401,6 +424,14 @@ function mailGridDataBound(e) {
         $('input.master-checkbox').prop('checked', false);
     };
     $("#mainWidget").removeClass("HideElement");
+
+    $(function () {
+        $(".notifications-switch").kendoMobileSwitch({
+            onLabel: "Active",
+            offLabel: "Disabled"
+        });
+    });
+
 }
 
 function mailContextMenuOpen(e) {
@@ -551,28 +582,28 @@ function bindCheckboxes() {
 // Configure menu items availability
 function setMenuItemsAvailability(isEnabled, selection) {
    
-    var menu = $('#mailMenu').data('kendoMenu');
-    var contextMenu = $('#mailContextMenu').data('kendoContextMenu');
+    //var menu = $('#mailMenu').data('kendoMenu');
+    //var contextMenu = $('#mailContextMenu').data('kendoContextMenu');
 
-    if (isEnabled) {
-        toggleEnableMenuItems(menu, "mailMenu", isEnabled);
-        toggleEnableMenuItems(contextMenu, "mailContextMenu", isEnabled);
-    } else if (!isEnabled && selection == "noselection") {
-        toggleEnableMenuItems(menu, "mailMenu", isEnabled);
-    } else if (!isEnabled && selection == "multiselection") {
-        var itemsIds = ["RE", "RE_ALL", "FW", "print"];
+    //if (isEnabled) {
+    //    toggleEnableMenuItems(menu, "mailMenu", isEnabled);
+    //    toggleEnableMenuItems(contextMenu, "mailContextMenu", isEnabled);
+    //} else if (!isEnabled && selection == "noselection") {
+    //    toggleEnableMenuItems(menu, "mailMenu", isEnabled);
+    //} else if (!isEnabled && selection == "multiselection") {
+    //    var itemsIds = ["RE", "RE_ALL", "FW", "print"];
 
-        toggleEnableMenuItems(menu, "mailMenu", true);
+    //    toggleEnableMenuItems(menu, "mailMenu", true);
 
-        itemsIds.forEach(function (itemID) {          
-            $("#mailMenu").find(".k-item[id=" + itemID + "]").each(function (index) {
-                menu.enable($(this), isEnabled);
-            });
-            $("#mailContextMenu").find(".k-item[id=" + itemID + "]").each(function (index) {
-                contextMenu.enable($(this), isEnabled);
-            });
-        });
-    }
+    //    itemsIds.forEach(function (itemID) {          
+    //        $("#mailMenu").find(".k-item[id=" + itemID + "]").each(function (index) {
+    //            menu.enable($(this), isEnabled);
+    //        });
+    //        $("#mailContextMenu").find(".k-item[id=" + itemID + "]").each(function (index) {
+    //            contextMenu.enable($(this), isEnabled);
+    //        });
+    //    });
+    //}
     //debugger;
     //if (OtherOwner == "YES")
     //{

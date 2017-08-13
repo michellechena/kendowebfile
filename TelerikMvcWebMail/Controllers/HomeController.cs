@@ -88,12 +88,10 @@ namespace TelerikMvcWebMail.Controllers
                 return Json(Result, JsonRequestBehavior.AllowGet);
             }
             else
-            {
-                if (mail != null && ModelState.IsValid)
-                {
+            {                
 
                     mailsService.Update(mail);
-                }
+               
             }
 
             return Json(new[] { mail }.ToDataSourceResult(request, ModelState));
@@ -102,6 +100,7 @@ namespace TelerikMvcWebMail.Controllers
         [ValidateInput(false)]
         public ActionResult Create([DataSourceRequest] DataSourceRequest request, MailViewModel mail)
         {
+            
             if (mail != null && ModelState.IsValid)
             {
                 mailsService.Create(mail);
@@ -203,10 +202,46 @@ namespace TelerikMvcWebMail.Controllers
             List<MailBoxFolderModel> Model = Obj.MailBoxFolderList(Convert.ToInt32(MailBoxId), Session["UserId"].ToString());
             return Json(Model,JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetNewEmail()
+        {
+            return PartialView();
+        }
 
+        public ActionResult SaveNewEmail(MailViewModel _MailViewModel)
+        {            
+           
+            TelerikMvcWebMail.DataLayer.CommonFunctions Obj = new DataLayer.CommonFunctions();
+            if (string.IsNullOrEmpty(_MailViewModel.Url))
+            {
+                _MailViewModel.IsValid = false;
+            }
+            else
+            {
+                Uri uriResult;
+                bool result = Uri.TryCreate(_MailViewModel.Url, UriKind.Absolute, out uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+               
+                if (result)
+                {
+                    _MailViewModel.IsValid = true;
+                }
+                else
+                {
+                    _MailViewModel.IsValid = false;
+                }
+            }          
 
+            bool Result= Obj.SaveNewEmail(_MailViewModel);
+            
+            return Json(Result,JsonRequestBehavior.AllowGet);
+        }
 
-
+        public ActionResult UpdateMailActiveDisable(string MessageId, string Flag)
+        {
+            TelerikMvcWebMail.DataLayer.CommonFunctions Obj = new DataLayer.CommonFunctions();
+            bool Result = Obj.UpdateMailStatus(MessageId, Flag);
+            return Json(Result, JsonRequestBehavior.AllowGet);
+        }
 
 
     }

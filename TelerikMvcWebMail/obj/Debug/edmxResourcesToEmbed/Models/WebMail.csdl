@@ -69,7 +69,6 @@
       <End Role="User" EntitySet="Users" />
       <End Role="MailBox" EntitySet="MailBoxes" />
     </AssociationSet>
-    <EntitySet Name="Mails" EntityType="WebMail.Mail" />
     <EntitySet Name="MailBoxAccesses" EntityType="WebMail.MailBoxAccess" />
     <AssociationSet Name="FK__MailBoxAc__MailB__29221CFB" Association="WebMail.FK__MailBoxAc__MailB__29221CFB">
       <End Role="MailBox" EntitySet="MailBoxes" />
@@ -84,6 +83,7 @@
       <End Role="MailBox" EntitySet="MailBoxes" />
       <End Role="MailBoxFolder" EntitySet="MailBoxFolders" />
     </AssociationSet>
+    <EntitySet Name="Mails" EntityType="WebMail.Mail" />
     <AssociationSet Name="FK__Mails__Category__14270015" Association="WebMail.FK__Mails__Category__14270015">
       <End Role="MailBoxFolder" EntitySet="MailBoxFolders" />
       <End Role="Mail" EntitySet="Mails" />
@@ -124,22 +124,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="Mail">
-    <Key>
-      <PropertyRef Name="MessageID" />
-    </Key>
-    <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="From" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="Subject" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="Received" Type="DateTime" Precision="0" />
-    <Property Name="IsRead" Type="Boolean" />
-    <Property Name="To" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-    <Property Name="Category" Type="Int32" />
-    <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-    <NavigationProperty Name="MailBoxFolder" Relationship="WebMail.FK__Mails__Category__14270015" FromRole="Mail" ToRole="MailBoxFolder" />
-  </EntityType>
   <EntityType Name="MailBoxAccess">
     <Key>
       <PropertyRef Name="MailBoxAccessId" />
@@ -198,6 +182,25 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Mail">
+    <Key>
+      <PropertyRef Name="MessageID" />
+    </Key>
+    <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="From" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Subject" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Received" Type="DateTime" Precision="0" />
+    <Property Name="IsRead" Type="Boolean" />
+    <Property Name="To" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Category" Type="Int32" />
+    <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Url" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="IsValid" Type="Boolean" />
+    <NavigationProperty Name="MailBoxFolder" Relationship="WebMail.FK__Mails__Category__14270015" FromRole="Mail" ToRole="MailBoxFolder" />
+  </EntityType>
   <Association Name="FK__Mails__Category__14270015">
     <End Type="WebMail.MailBoxFolder" Role="MailBoxFolder" Multiplicity="0..1" />
     <End Type="WebMail.Mail" Role="Mail" Multiplicity="*" />

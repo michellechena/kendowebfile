@@ -65,22 +65,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Mails">
-      <EntityTypeMapping TypeName="WebMail.Mail">
-        <MappingFragment StoreEntitySet="Mails">
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="Category" ColumnName="Category" />
-          <ScalarProperty Name="To" ColumnName="To" />
-          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
-          <ScalarProperty Name="Received" ColumnName="Received" />
-          <ScalarProperty Name="Subject" ColumnName="Subject" />
-          <ScalarProperty Name="Email" ColumnName="Email" />
-          <ScalarProperty Name="From" ColumnName="From" />
-          <ScalarProperty Name="Body" ColumnName="Body" />
-          <ScalarProperty Name="MessageID" ColumnName="MessageID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="MailBoxAccesses">
       <EntityTypeMapping TypeName="WebMail.MailBoxAccess">
         <MappingFragment StoreEntitySet="MailBoxAccess">
@@ -98,6 +82,25 @@
           <ScalarProperty Name="MailBoxId" ColumnName="MailBoxId" />
           <ScalarProperty Name="MailBoxFolderName" ColumnName="MailBoxFolderName" />
           <ScalarProperty Name="MailBoxFolderId" ColumnName="MailBoxFolderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mails">
+      <EntityTypeMapping TypeName="WebMail.Mail">
+        <MappingFragment StoreEntitySet="Mails">
+          <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="To" ColumnName="To" />
+          <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+          <ScalarProperty Name="Received" ColumnName="Received" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="From" ColumnName="From" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="MessageID" ColumnName="MessageID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

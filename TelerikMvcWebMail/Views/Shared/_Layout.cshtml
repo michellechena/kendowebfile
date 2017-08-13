@@ -1,6 +1,26 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <style>
+        .SucessNotification
+        {
+            background-color:#5cb85c !important ;
+        }
+        .ErrorNotification
+        {
+            background-color:#d9534f !important ;
+        }
+        .km-checkbox, .km-switch
+        {
+            width:6.7rem !important;
+        }
+        .km-switch-handle
+        {
+            background-color:#0f7fd2 !important;
+        }
+
+        
+        </style>
     <title>@ViewBag.Title - My Kendo UI MVC Application</title>
     <!--GoogleAnalytics tracking script-->
     <script type="text/javascript">
@@ -114,12 +134,36 @@
                 .ContentTemplateId("tooltip-template")
         )
     </header>
-    <content class="main-content">
+    
+    <content class="main-content" >    
+       
         @RenderBody()
+        
     </content>
+    <span id="notification" style="display:block;background-color:gray"></span>
 </body>
 </html>
+<script id="successTemplate" type="text/x-kendo-template">
+    <div class="upload-success SucessNotification" style="
+    width: 224px;
+    padding: 1px;
+    height: 41px;
+    color: white;">     
+        <h5 style="margin-top:10px">#= message #</h5>
+    </div>
 
+</script>
+<script id="errorTemplate" type="text/x-kendo-template">
+    <div class="wrong-pass ErrorNotification" style="
+    width: 224px;
+    padding: 1px;
+    height: 41px;
+    color: white;">      
+        <h5 style="margin-top:10px">#= message #</h5>
+    </div>
+</script>
+
+<input type="hidden" id="IsParialViewLoaded">
 <script>
     function DrpMailBoxChnages(e)
     {
@@ -147,5 +191,37 @@
             })
         }
         
+    }
+
+    var notification = $("#notification").kendoNotification({
+        position: {
+            pinned: true,
+            top: 60,
+            right: 30
+        },
+        autoHideAfter: 0,
+        stacking: "down",
+        message: "test",
+        templates: [{
+            type: "error",
+            template: $("#errorTemplate").html()
+        }, {
+            type: "upload-success",
+            template: $("#successTemplate").html()
+        }]
+
+    }).data("kendoNotification");
+    function showSuccessNotification(message) {
+        notification.hide();
+        notification.show({
+            message: message
+        }, "upload-success");
+        setTimeout(function () { notification.hide(); }, 3000)
+    }
+    function showErrorNotification(message) {
+        notification.show({
+            message: message
+        }, "error");
+        setTimeout(function () { notification.hide(); }, 3000)
     }
     </script>

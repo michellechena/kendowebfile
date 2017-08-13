@@ -29,6 +29,12 @@ namespace TelerikMvcWebMail.Models
         public string Email { get; set; }
         public string Status { get; set; }
         public string Owner { get; set; }
+
+        [Required(ErrorMessage = "name required")]
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public Nullable<bool> IsValid { get; set; }
+        public string RequestFrom { get; set; }
         internal Mail ToEntity()
         {
             return new Mail
@@ -43,7 +49,9 @@ namespace TelerikMvcWebMail.Models
                 MessageID = ID,
                 Email = Email,
                 Status= Status,
-            
+                IsValid=IsValid,
+                Name=Name,
+                Url=Url
             };
         }
     }

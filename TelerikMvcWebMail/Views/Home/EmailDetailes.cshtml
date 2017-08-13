@@ -12,6 +12,7 @@
         @Html.HiddenFor(model => model.ID,new { @value= Model.ID })
         <div class="form-group">
             <div class="col-md-12">
+
                 @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "" })               
             </div>          
             <div class="col-md-12">
@@ -27,7 +28,7 @@
                 @(Html.Kendo().DropDownListFor(model => model.Status)
           .DataTextField("Text")
           .DataValueField("Value")
-          
+
           .BindTo(new List<SelectListItem>() {
                new SelectListItem() {
                   Text = "Select",
@@ -40,17 +41,17 @@
               new SelectListItem() {
                   Text = "Disabled",
                   Value = "D"
-              },
-              new SelectListItem() {
-                  Text = "InActive",
-                  Value = "I"
-              },
-                   new SelectListItem() {
-                  Text = "Retired",
-                  Value = "R"
               }
+              //new SelectListItem() {
+              //    Text = "InActive",
+              //    Value = "I"
+              //},
+              //     new SelectListItem() {
+              //    Text = "Retired",
+              //    Value = "R"
+              //}
           })
-          
+
           .HtmlAttributes(new { @class = "form-control" })
                 )
             </div>

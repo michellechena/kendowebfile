@@ -24,30 +24,30 @@ namespace TelerikMvcWebMail.DataLayer
 
     public class CommonFunctions
     {
-        public List<SelectListItem> MailBoxList(int UserId,string request)
+        public List<SelectListItem> MailBoxList(int UserId, string request)
         {
-            List<MailBoxModel> _Model =new  List<MailBoxModel>();
+            List<MailBoxModel> _Model = new List<MailBoxModel>();
             List<MailBoxModel> AssinedMailBox = new List<MailBoxModel>();
             List<SelectListItem> _MainBoxList = new List<SelectListItem>();
             string Result = string.Empty;
             using (var Entity = new WebMailEntities())
             {
-                _Model = Entity.MailBoxes.Where(x=>x.UserId==UserId).Select(s => new MailBoxModel
+                _Model = Entity.MailBoxes.Where(x => x.UserId == UserId).Select(s => new MailBoxModel
                 {
                     MailBoxId = s.MailBoxId,
                     MailBoxName = s.MailBoxName,
-                    MailBoxSequence = s.MailBoxSequence ,
+                    MailBoxSequence = s.MailBoxSequence,
                     UserId = s.UserId,
-                    Owener="YES"
-                }).OrderBy(x=>x.MailBoxSequence).ToList();
+                    Owener = "YES"
+                }).OrderBy(x => x.MailBoxSequence).ToList();
 
             }
             using (var Entity = new WebMailEntities())
             {
-                AssinedMailBox = Entity.MailBoxAccesses.Where(x=>x.UserId== UserId).Select(s => new MailBoxModel
+                AssinedMailBox = Entity.MailBoxAccesses.Where(x => x.UserId == UserId).Select(s => new MailBoxModel
                 {
                     MailBoxId = s.MailBoxId,
-                    MailBoxName = s.MailBox.MailBoxName +" : "+s.MailBox.User.FullName,
+                    MailBoxName = s.MailBox.MailBoxName + " : " + s.MailBox.User.FullName,
                     MailBoxSequence = s.MailBox.MailBoxSequence,
                     UserId = s.UserId,
                     Owener = "NO"
@@ -55,34 +55,34 @@ namespace TelerikMvcWebMail.DataLayer
             }
             if (AssinedMailBox.Count() > 0)
             {
-             _Model.AddRange(AssinedMailBox);
+                _Model.AddRange(AssinedMailBox);
             }
-            if (request=="DRP")
+            if (request == "DRP")
             {
-                
+
                 _MainBoxList = _Model.Select(s => new SelectListItem
                 {
                     Text = s.MailBoxName,
                     Value = s.MailBoxId.ToString(),
-                  //  Selected = s.MailBoxSequence == 1 ? true : false
+                    //  Selected = s.MailBoxSequence == 1 ? true : false
                 }).ToList();
-          };
-            
+            };
+
             return _MainBoxList;
         }
-        public List<MailBoxFolderModel> MailBoxFolderList(long MailBoxId,string UserId)
+        public List<MailBoxFolderModel> MailBoxFolderList(long MailBoxId, string UserId)
         {
             long _UserId = Convert.ToInt32(UserId);
             List<MailBoxFolderModel> Model = new List<MailBoxFolderModel>();
             using (var Entity = new WebMailEntities())
             {
-                Model = Entity.MailBoxFolders.Where(x => x.MailBoxId == MailBoxId && x.IsActive==true).Select(s => new MailBoxFolderModel
+                Model = Entity.MailBoxFolders.Where(x => x.MailBoxId == MailBoxId && x.IsActive == true).Select(s => new MailBoxFolderModel
                 {
                     MailBoxFolderId = s.MailBoxFolderId,
                     MailBoxFolderName = s.MailBoxFolderName,
                     MailBoxId = s.MailBoxId,
-                    Owner=s.MailBox.UserId== _UserId?"YES":"NO",
-                    Sequence =s.Sequence,
+                    Owner = s.MailBox.UserId == _UserId ? "YES" : "NO",
+                    Sequence = s.Sequence,
                 }).OrderBy(x => x.Sequence).ToList();
 
             }
@@ -91,7 +91,7 @@ namespace TelerikMvcWebMail.DataLayer
 
         public MailBoxFolderModel GetFolderDeatiles(long FolderId)
         {
-           
+
             MailBoxFolderModel Model = new MailBoxFolderModel();
             using (var Entity = new WebMailEntities())
             {
@@ -99,7 +99,7 @@ namespace TelerikMvcWebMail.DataLayer
                 {
                     MailBoxFolderId = s.MailBoxFolderId,
                     MailBoxFolderName = s.MailBoxFolderName,
-                    MailBoxId = s.MailBoxId,                  
+                    MailBoxId = s.MailBoxId,
                     Sequence = s.Sequence,
                 }).Where(x => x.MailBoxFolderId == FolderId).FirstOrDefault();
 
@@ -112,29 +112,29 @@ namespace TelerikMvcWebMail.DataLayer
             List<MailBoxFolderModel> Model = new List<MailBoxFolderModel>();
             using (var Entity = new WebMailEntities())
             {
-                Model = Entity.MailBoxFolders.Where(a=>a.MailBox.UserId== _UserId && a.IsActive==true).Select(s => new MailBoxFolderModel
+                Model = Entity.MailBoxFolders.Where(a => a.MailBox.UserId == _UserId && a.IsActive == true).Select(s => new MailBoxFolderModel
                 {
                     MailBoxFolderId = s.MailBoxFolderId,
                     MailBoxFolderName = s.MailBoxFolderName,
                     MailBoxId = s.MailBoxId,
                     Owner = s.MailBox.UserId == _UserId ? "YES" : "NO",
                     Sequence = s.Sequence,
-                    MailBoxName=s.MailBox.MailBoxName
-                }).OrderBy(x => x.MailBoxId).ThenBy(x=>x.Sequence).ToList();
+                    MailBoxName = s.MailBox.MailBoxName
+                }).OrderBy(x => x.MailBoxId).ThenBy(x => x.Sequence).ToList();
 
             }
             return Model;
         }
         public List<SelectListItem> MailBoxList(int UserId)
-        {        
+        {
             List<SelectListItem> _MainBoxList = new List<SelectListItem>();
-            
+
             using (var Entity = new WebMailEntities())
             {
                 _MainBoxList = Entity.MailBoxes.Where(x => x.UserId == UserId).Select(s => new SelectListItem
                 {
                     Text = s.MailBoxName,
-                    Value = s.MailBoxId.ToString(),                    
+                    Value = s.MailBoxId.ToString(),
                 }).ToList();
 
             }
@@ -146,7 +146,7 @@ namespace TelerikMvcWebMail.DataLayer
             {
                 MailBoxFolder _MailBoxFolders = new MailBoxFolder();
                 //For Add
-                if (string.IsNullOrEmpty(Model.MailBoxFolderId.ToString()) || Model.MailBoxFolderId==0)
+                if (string.IsNullOrEmpty(Model.MailBoxFolderId.ToString()) || Model.MailBoxFolderId == 0)
                 {
                     using (var Entity = new WebMailEntities())
                     {
@@ -163,9 +163,9 @@ namespace TelerikMvcWebMail.DataLayer
                     using (var Entity = new WebMailEntities())
                     {
                         MailBoxFolder _MailBoxUpdate = Entity.MailBoxFolders.Where(s => s.MailBoxFolderId == Model.MailBoxFolderId).FirstOrDefault();
-                        if(_MailBoxUpdate !=null)
+                        if (_MailBoxUpdate != null)
                         {
-                            _MailBoxUpdate.MailBoxFolderName= Model.MailBoxFolderName;
+                            _MailBoxUpdate.MailBoxFolderName = Model.MailBoxFolderName;
                             _MailBoxUpdate.MailBoxId = Model.MailBoxId;
                             Entity.SaveChanges();
                         }
@@ -178,7 +178,7 @@ namespace TelerikMvcWebMail.DataLayer
                     {
                         MailBoxFolder _UpdateSequence = new MailBoxFolder();
                         if (SequenceArry[i].ToString() == "NEWREC")
-                        {                           
+                        {
                             _UpdateSequence = entity.MailBoxFolders.SingleOrDefault(b => b.MailBoxFolderId == _MailBoxFolders.MailBoxFolderId);
                         }
                         else
@@ -198,29 +198,79 @@ namespace TelerikMvcWebMail.DataLayer
             }
 
         }
-        public bool FunctionDeleteFolder(string  Id)
+        public bool FunctionDeleteFolder(string Id)
         {
             try
             {
                 long _Id = Convert.ToInt32(Id);
                 MailBoxFolder _MailBoxFolders = new MailBoxFolder();
-               
-                    using (var Entity = new WebMailEntities())
+
+                using (var Entity = new WebMailEntities())
+                {
+                    MailBoxFolder _MailBoxUpdate = Entity.MailBoxFolders.Where(s => s.MailBoxFolderId == _Id).FirstOrDefault();
+                    if (_MailBoxUpdate != null)
                     {
-                        MailBoxFolder _MailBoxUpdate = Entity.MailBoxFolders.Where(s => s.MailBoxFolderId == _Id).FirstOrDefault();
-                        if (_MailBoxUpdate != null)
-                        {
-                            _MailBoxUpdate.IsActive =false;                            
-                            Entity.SaveChanges();
-                        }
+                        _MailBoxUpdate.IsActive = false;
+                        Entity.SaveChanges();
                     }
-                
+                }
+
                 return true;
             }
             catch (Exception ex)
             {
                 return false;
             }
+        }
+        public bool SaveNewEmail(MailViewModel _MailViewModel)
+        {
+            try
+            {
+                Mail _Mail = new Mail();
+                _Mail.Category = Convert.ToInt32(_MailViewModel.Category);
+                _Mail.IsValid = _MailViewModel.IsValid;
+                _Mail.Name = _MailViewModel.Name;
+                _Mail.Url = _MailViewModel.Url;
+                using (var Entity = new WebMailEntities())
+                {
+                    Entity.Mails.Add(_Mail);
+                    Entity.SaveChanges();
+                   
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+
+        }
+
+        public bool UpdateMailStatus(string Id,string flag)
+        {
+            try
+            {
+                int _Id = Convert.ToInt32(Id);
+                using (var Entity = new WebMailEntities())
+                {
+                    Mail _Mail = Entity.Mails.Where(x => x.MessageID == _Id).FirstOrDefault();
+                    if(_Mail!=null)
+                    {
+                        _Mail.Status = flag;
+                        Entity.SaveChanges();
+                    }
+                    
+                    
+
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
 
         }
     }

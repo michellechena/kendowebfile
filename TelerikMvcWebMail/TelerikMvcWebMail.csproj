@@ -343,6 +343,7 @@
     <Content Include="Views\Home\EmailDetailes.cshtml" />
     <Content Include="Views\Home\MailBoxFolders.cshtml" />
     <Content Include="Views\Home\_PartialAddEditFolder.cshtml" />
+    <Content Include="Views\Home\GetNewEmail.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

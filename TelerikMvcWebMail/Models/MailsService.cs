@@ -37,7 +37,10 @@ namespace TelerikMvcWebMail.Models
                     Category = message.Category.ToString(),
                     Email = message.Email,
                     Status=message.Status,
-                    Owner=message.MailBoxFolder.MailBox.UserId== _UserId?"YES":"NO"
+                    Owner=message.MailBoxFolder.MailBox.UserId== _UserId?"YES":"NO",
+                    Name=message.Name,
+                    IsValid=message.IsValid,
+                    Url=message.Url
                 }).ToList();
 
                 if (!UpdateDatabase)
@@ -96,35 +99,25 @@ namespace TelerikMvcWebMail.Models
         public void Update(MailViewModel mail)
         {
             UpdateDatabase = true;
-            if (!UpdateDatabase)
+
+            using (var Entity = new WebMailEntities())
             {
-                
-                var target = One(e => e.ID == mail.ID);
+
+                var target = Entity.Mails.Where(x => x.MessageID == mail.ID).FirstOrDefault();
 
                 if (target != null)
                 {
-                    target.Text = mail.Text;
+                    int _Category = Convert.ToInt32(mail.Category);                   
                     target.From = mail.From;
-                    target.Subject = mail.Subject;
-                    target.Date = mail.Date;
+                    target.Subject = mail.Subject;                   
                     target.IsRead = mail.IsRead;
                     target.To = mail.To;
-                    target.Category = mail.Category;
-                    target.ID = mail.ID;
+                    target.Category = _Category;                   
                     target.Email = mail.Email;
-                  
-
-
-
+                    Entity.SaveChanges();
                 }
             }
-            else
-            {
-                var entity = mail.ToEntity();
-                entities.Mails.Attach(entity);
-                entities.Entry(entity).State = EntityState.Modified;
-                entities.SaveChanges();
-            }
+            
         }
 
         public MailViewModel One(Func<MailViewModel, bool> predicate)

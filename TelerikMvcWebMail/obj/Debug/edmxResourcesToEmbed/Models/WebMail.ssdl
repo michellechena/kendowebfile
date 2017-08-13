@@ -58,6 +58,9 @@
     <Property Name="To" Type="nvarchar" MaxLength="256" />
     <Property Name="Category" Type="int" />
     <Property Name="Status" Type="char" MaxLength="1" />
+    <Property Name="Name" Type="nvarchar" MaxLength="500" />
+    <Property Name="Url" Type="nvarchar" MaxLength="500" />
+    <Property Name="IsValid" Type="bit" />
   </EntityType>
   <EntityType Name="People">
     <Key>

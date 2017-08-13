@@ -12,12 +12,12 @@
         <EntityTypeShape EntityType="WebMail.User" Width="1.5" PointX="7.125" PointY="3.5" />
         <EntityTypeShape EntityType="WebMail.MailBox" Width="1.5" PointX="6.625" PointY="0.75" />
         <AssociationConnector Association="WebMail.FK__MailBox__UserId__5CD6CB2B" />
-        <EntityTypeShape EntityType="WebMail.Mail" Width="1.5" PointX="10.75" PointY="5.875" />
         <EntityTypeShape EntityType="WebMail.MailBoxAccess" Width="1.5" PointX="11.375" PointY="2.25" />
         <AssociationConnector Association="WebMail.FK__MailBoxAc__MailB__29221CFB" />
         <AssociationConnector Association="WebMail.FK__MailBoxAc__UserI__2A164134" />
         <EntityTypeShape EntityType="WebMail.MailBoxFolder" Width="1.5" PointX="8.875" PointY="0.75" />
         <AssociationConnector Association="WebMail.FK__MailBoxFo__MailB__02FC7413" />
+        <EntityTypeShape EntityType="WebMail.Mail" Width="1.5" PointX="11.125" PointY="6.375" />
         <AssociationConnector Association="WebMail.FK__Mails__Category__14270015" />
       </Diagram>
     </edmx:Diagrams>
